@@ -1,8 +1,5 @@
-
-var libpath = './tencentyoutuyun';
-
 module.exports = {
-  auth:     require(libpath + '/auth.js'),
-  conf:     require(libpath + '/conf.js'),
-  youtu:    require(libpath + '/youtu.js'),
+  auth:     require('/auth.js'),
+  conf:     require('/conf.js'),
+  youtu:    require('/youtu.js'),
 };
