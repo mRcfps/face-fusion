@@ -1,4 +1,6 @@
 var crypto = require('crypto');
+var auth = require('../face_sdk/auth');
+var conf = require('../face_sdk/conf');
 var http = require('http');
 
 // API expired time (30 days)
@@ -10,25 +12,20 @@ const secretId = 'AKID65vwrbipAJC0c4hUP7g9RYTFsKaf2MzQ';
 const secretKey = 'Yu42aCqrjw2viPvEQNaL5dxNjutkOq69';
 const userId = '1043269994';
 
+conf.setAppInfo(appId, secretId, secretKey, userId, 0);
+
 // Generate API authorization key
 // See: http://open.youtu.qq.com/#/develop/tool-authentication
 function getAuthKey() {
   var expired = parseInt(Date.now() / 1000) + EXPIRED_SECONDS;
-  var now = parseInt(Date.now() / 1000);
-  var rdm = parseInt(Math.random() * Math.pow(2, 32));
-  var original = 'u=' + userId + 'a=' + appId + '&k=' + secretId + '&e=' + expired +
-                 '&t=' + now + '&r=' + rdm + '&f=';
-  var data = new Buffer(original, 'utf8');
-  var res = crypto.createHmac('sha1', secretKey).update(data).digest();
-  var bin = Buffer.concat([res,data]);
-  var key = bin.toString('base64');
-
+  var key = auth.appSign(expired);
   return key;
 }
 
 // Construct request payload with given image and template
 function constructPayload(image, template) {
   var payload = {
+    'app_id': appId,
     'img_data': image,
     'rsp_img_type': "url",
     'opdata': [{
@@ -38,7 +35,7 @@ function constructPayload(image, template) {
       }
     }]
   };
-  return payload;
+  return JSON.stringify(payload);
 }
 
 function constructRequestOptions(payload) {
@@ -81,7 +78,7 @@ exports.faceFusion = function (image, template, callback) {
         console.log('[ERROR] youtu API request failed: ' + content.msg);
         callback(false, "");
       } else {
-        callback(true, body.img_url);
+        callback(true, content.img_url);
       }
     });
   });
