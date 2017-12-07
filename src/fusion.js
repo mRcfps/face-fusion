@@ -14,6 +14,7 @@ const userId = '****';
 // See: http://open.youtu.qq.com/#/develop/tool-authentication
 function getAuthKey() {
   var expired = parseInt(Date.now() / 1000) + EXPIRED_SECONDS;
+  var now = parseInt(Date.now() / 1000);
   var rdm = parseInt(Math.random() * Math.pow(2, 32));
   var original = 'u=' + qq + 'a=' + appId + '&k=' + secretId + '&e=' + expired +
                  '&t=' + now + '&r=' + rdm + '&f=';
