@@ -18,8 +18,8 @@ function getAuthKey() {
   var rdm = parseInt(Math.random() * Math.pow(2, 32));
   var original = 'u=' + userId + 'a=' + appId + '&k=' + secretId + '&e=' + expired +
                  '&t=' + now + '&r=' + rdm + '&f=';
-  var data = new Buffer(plainText,'utf8');
-  var res = crypto.createHmac('sha1',secretKey).update(data).digest();
+  var data = new Buffer(original, 'utf8');
+  var res = crypto.createHmac('sha1', secretKey).update(data).digest();
   var bin = Buffer.concat([res,data]);
   var key = bin.toString('base64');
 
