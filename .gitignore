@@ -22,5 +22,6 @@ yarn-error.log*
 
 *.pyc
 pf.pem
+ACCESS_KEY
 
 .vscode
