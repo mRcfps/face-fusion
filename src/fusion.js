@@ -1,6 +1,6 @@
 var crypto = require('crypto');
-var auth = require('../face_sdk/auth');
-var conf = require('../face_sdk/conf');
+var auth = require('./face_sdk/auth');
+var conf = require('./face_sdk/conf');
 var http = require('http');
 
 // API expired time (30 days)
@@ -71,15 +71,9 @@ exports.faceFusion = function (image, template, callback) {
     });
     res.on('end', function () {
       // Parse response body
-      var content = JSON.parse(body);
+      var data = JSON.parse(body);
 
-      if (content.ret != 0) {
-        // youtu API request failed
-        console.log('[ERROR] youtu API request failed: ' + content.msg);
-        callback(false, "");
-      } else {
-        callback(true, content.img_url);
-      }
+      callback(data);
     });
   });
 
