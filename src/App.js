@@ -1,13 +1,15 @@
 import React from 'react';
-import { Upload, Icon, Modal } from 'antd';
+import { Upload, Icon, Modal, Button, Spin } from 'antd';
 import { faceFusion } from './fusion';
-import 'antd/dist/antd.css'
+import 'antd/dist/antd.css';
+import './css/App.css';
 
 class App extends React.Component {
   state = {
     previewVisible: false,
     previewImage: '',
     fileList: [],
+    isFusion: false,
   };
 
   handleCancel = () => this.setState({ previewVisible: false })
@@ -26,11 +28,15 @@ class App extends React.Component {
     const { fileList } = this.state;
     const image = fileList[0];
     console.log('image', image);
+    this.setState({
+      isFusion: true,
+    });
 
-    faceFusion(image.thumbUrl.split(',')[1], 'cf_fuwa_yasuiqian', (data) => {
+    faceFusion(image.thumbUrl.split(',')[1], 'cf_lover_libai', (data) => {
       console.log('data', data);
       that.setState({
         previewImage: data.img_url,
+        isFusion: false,
       });
     });
   }
@@ -44,19 +50,38 @@ class App extends React.Component {
       </div>
     );
     return (
-      <div className="clearfix">
-        <Upload
-          listType="picture-card"
-          fileList={fileList}
-          onPreview={this.handlePreview}
-          onChange={this.handleChange}
-        >
-          {fileList.length >= 3 ? null : uploadButton}
-        </Upload>
-        {
-          previewImage && <img src={previewImage} alt="hhh" />
-        }
-        <button onClick={this.handleClick}>开始融合</button>
+      <div className="app">
+        <div className="container">
+          <div className="upload">
+            <Upload
+              listType="picture-card"
+              fileList={fileList}
+              onPreview={this.handlePreview}
+              onChange={this.handleChange}
+            >
+              {fileList.length >= 3 ? null : uploadButton}
+            </Upload>
+          </div>
+          <div className="loading">
+            {
+              this.state.isFusion
+              && (
+                <Spin tip="加载中..."></Spin>
+              )
+            }  
+          </div>
+          <div className="fusionBtn">
+            <Button onClick={this.handleClick} type="dashed">开始融合</Button>
+          </div>
+          <div className="result">
+            {
+              previewImage 
+              && (
+                <img src={previewImage} alt="hhh" className="resultImg"/>
+              )
+            }
+          </div>
+        </div>
       </div>
     );
   }
