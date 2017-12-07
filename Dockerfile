@@ -1,19 +1,8 @@
-FROM node:carbon
+FROM nginx:1.13
 
-# Create app directory
-WORKDIR /usr/src/app
+# Remove default config of nginx
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+COPY config/nginx.conf /etc/nginx/conf.d/
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
-# Bundle app source
-COPY . .
-
-EXPOSE 8080
-CMD [ "npm", "start" ]
+COPY build /build
