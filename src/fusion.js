@@ -5,10 +5,10 @@ var http = require('http');
 var EXPIRED_SECONDS = 2592000;
 
 // API configurations
-const appId = '';
-const secretId = '****';
-const secretKey = '****';
-const userId = '****';
+const appId = '10110669';
+const secretId = 'AKID65vwrbipAJC0c4hUP7g9RYTFsKaf2MzQ';
+const secretKey = 'Yu42aCqrjw2viPvEQNaL5dxNjutkOq69';
+const userId = '1043269994';
 
 // Generate API authorization key
 // See: http://open.youtu.qq.com/#/develop/tool-authentication
@@ -16,7 +16,7 @@ function getAuthKey() {
   var expired = parseInt(Date.now() / 1000) + EXPIRED_SECONDS;
   var now = parseInt(Date.now() / 1000);
   var rdm = parseInt(Math.random() * Math.pow(2, 32));
-  var original = 'u=' + qq + 'a=' + appId + '&k=' + secretId + '&e=' + expired +
+  var original = 'u=' + userId + 'a=' + appId + '&k=' + secretId + '&e=' + expired +
                  '&t=' + now + '&r=' + rdm + '&f=';
   var data = new Buffer(plainText,'utf8');
   var res = crypto.createHmac('sha1',secretKey).update(data).digest();
