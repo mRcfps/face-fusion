@@ -1,0 +1,68 @@
+// import basic style for this project
+@import 'base';
+
+.homePage {
+  width: 100%;
+  height: 100%;
+}
+
+.bg {
+  background-image: url('../img/background.png');
+  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.footerTool {
+  position: absolute;
+  top: 82%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadBtn {
+  width: 43%;
+  height: 4.3em;
+  background: black;
+}
+
+.upload {
+  width: 43%;
+  margin: 0 4.1em;
+  height: 4.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF;
+  border-radius: 1.9em;
+  box-shadow: 0 0 20px 0 #FFF;
+
+  .innerUpload {
+    height: 4.3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .uploadText {
+    font-family: none;
+    font-size: 20px;
+    color: rgba(17, 17, 17, .6);
+    font-weight: bolder;
+  }
+  
+  .uploadIcon {
+    width: 20px;
+    height: 20px;
+    margin-left: .8em;
+  }
+
+  .ant-upload-list-item {
+    display: none;
+  }
+}
+

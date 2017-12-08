@@ -1,0 +1,71 @@
+.displayFullScreen {
+  width: 100%;
+  height: 100%;
+}
+html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+}
+.homePage {
+  width: 100%;
+  height: 100%;
+}
+.bg {
+  background-image: url('../img/background.png');
+  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.footerTool {
+  position: absolute;
+  top: 82%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.uploadBtn {
+  width: 43%;
+  height: 4.3em;
+  background: black;
+}
+.upload {
+  width: 43%;
+  margin: 0 4.1em;
+  height: 4.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF;
+  border-radius: 1.9em;
+  box-shadow: 0 0 20px 0 #FFF;
+}
+.upload .innerUpload {
+  height: 4.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload .uploadText {
+  font-family: none;
+  font-size: 20px;
+  color: rgba(17, 17, 17, 0.6);
+  font-weight: bolder;
+}
+.upload .uploadIcon {
+  width: 20px;
+  height: 20px;
+  margin-left: .8em;
+}
+.upload .ant-upload-list-item {
+  display: none;
+}
