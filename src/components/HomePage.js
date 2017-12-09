@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 
 // import antd component
-import { Upload } from 'antd';
+import { Upload, message, Spin, Icon } from 'antd';
+
+// import upload file component
+import PfUpload from './PfUpload';
+
+// import jquery for better operation
+import $ from 'jquery';
 
 // import img
 import background from './img/background.png';
@@ -18,38 +24,94 @@ import { faceFusion } from '../util/fusion';
 export default class extends Component {
   state = {
     isUploading: false,
+    isFusioning: false,
+    fileList: [],
+    count: 0,
   };
+
+  success = (msg) => {
+    message.success(msg);
+  }
+
+  error = (msg) => {
+    message.success(msg);
+  }
 
   handleUpload = (imageData) => {
     // store that instance, for async function usage
     const that = this;
 
-    // update the upload status
-    this.setState({ isUploading: true });
+    // update the upload status to isLoading
+    this.setState({ isFusioning: true });
 
     // starting upload
-    faceFusion(imageData, 'isUploading', (err, imageUrl) => {
+    faceFusion(imageData, 'cf_lover_libai', (err, imageUrl) => {
+      console.log(err, imageUrl);
       if (!err) {
         // when success, replace background img
         this.handleReplaceBackground(imageUrl);
+        this.success('融合成功！');
       } else {
         // else error, hint error message
-        switch (err) {
-          
-        }
+        this.error('融合失败！请换一张图片');
       }
-    })
+
+      // update the upload status to loaded
+      that.setState({ isFusioning: false });
+    });
   }
 
-  handleChange = ({ fileList }) => {
-    // start upload this image file to the faceFusion sdk
-    // split the base64 data from the 
-    const file = fileList[0];
-    const imageData = file.thumbUrl.split(',')[1];
-    this.handleUpload(imageData);
+  handleReplaceBackground = (imageUrl) => {
+    console.log('imageUrl', imageUrl);
+    const bgDom = $('.bg')[0];
+    $(bgDom).css('background-image', `url(${imageUrl.img_url_thumb})`);
+  }
+
+  handleError = () => {
+    this.setState({ isUploading: false });
+    this.error('无效的图片，请重新上传！');
+  }
+
+  handleSuccess = (res) => {
+    this.success('上传图片成功！');
+    this.setState({ isUploading: false });
+
+    // take out base64 (data:image/jpeg;base64,) prefix
+    const getBaseData = res.split(',')[1];
+
+    // start upload
+    this.handleUpload(getBaseData);
+  }
+
+  handleStartUpload = () => {
+    this.setState({ isUploading: true });
   }
 
   render() {
+    // the uploadIcon for the isUploading status 
+    const uploadIcon = ( 
+      <Icon 
+        type="loading" 
+        style={{ fontSize: 20, color: 'rgba(17, 17, 17, .6)' }} 
+        spin />
+    );
+
+    // upload icon status judge
+    const uploadStatusIcon = (
+      (this.state.isUploading || this.state.isFusioning)
+      ? ( <span className="isUploading"><Spin indicator={uploadIcon} /></span> )
+      : ( <img src={upload} alt="upload button" className="uploadIcon"/> )
+    );
+
+    // upload text status judge
+    let uploadText = '上传头像';
+    const { isUploading, isFusioning } = this.state;
+    if (isUploading) {
+      uploadText = '上传中...';
+    }
+    if (isFusioning) {
+      uploadText = '融合中...';
+    }
 
     return (
       <div className="homePage">
@@ -57,16 +119,17 @@ export default class extends Component {
         <div className="footerTool">
             <img src={back} alt="back button" className="backIcon"/>
             <div className="upload">
-              <Upload
-                listType="picture"
-                onChange={this.handleChange}
-                beforeUpload={this.beforeUpload}
+              <PfUpload
+                component="div"
+                handleSuccess={this.handleSuccess}
+                handleError={this.handleError}
+                handleStartUpload={this.handleStartUpload}
               >
                 <div className="innerUpload">
-                  <span className="uploadText">上传头像</span>
-                  <img src={upload} alt="upload button" className="uploadIcon"/>
+                  <span className="uploadText">{uploadText}</span>
+                  { uploadStatusIcon }
                 </div>
-              </Upload>
+              </PfUpload>
             </div>
             <img src={download} alt="download button" className="downloadIcon"/>
         </div>

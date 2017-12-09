@@ -24,6 +24,12 @@ body {
   width: 100%;
   position: absolute;
 }
+.loading {
+  position: absolute;
+  top: 82%;
+  width: 100%;
+  text-align: center;
+}
 .footerTool {
   position: absolute;
   top: 82%;
@@ -64,6 +70,9 @@ body {
 .upload .uploadIcon {
   width: 20px;
   height: 20px;
+  margin-left: .8em;
+}
+.upload .isUploading {
   margin-left: .8em;
 }
 .upload .ant-upload-list-item {

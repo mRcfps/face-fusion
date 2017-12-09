@@ -73,13 +73,13 @@ exports.faceFusion = function (image, template, callback) {
       // Parse response body
       var data = JSON.parse(body);
 
-      callback(data);
+      callback(false, data);
     });
   });
 
   req.on('error', function (err) {
     console.log('[ERROR] ' + err.message);
-    callback(false, "");
+    callback(true, "");
   })
 
   // Write data to request body
