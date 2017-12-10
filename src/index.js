@@ -15,6 +15,7 @@ import {
 import {
   App,
   HomePage,
+  SelectScene,
 } from './components/';
 
 const Root = () => (
@@ -22,6 +23,7 @@ const Root = () => (
     <div className="subRoot">
       <Route exact path="/" component={App} />
       <Route path="/homePage" component={HomePage} />
+      <Route path="/selectScene" component={SelectScene} />
     </div>
   </Router>
 )

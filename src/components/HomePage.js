@@ -46,7 +46,7 @@ export default class extends Component {
     this.setState({ isFusioning: true });
 
     // starting upload
-    faceFusion(imageData, 'cf_lover_libai', (err, imageUrl) => {
+    faceFusion(imageData, 'youtu_68981_20171208091242_4088', (err, imageUrl) => {
       console.log(err, imageUrl);
       if (!err) {
         // when success, replace background img
@@ -64,10 +64,10 @@ export default class extends Component {
 
   handleReplaceBackground = (imageUrl) => {
     // let download icon can make effects
-    this.setState({ fusionedImg: imageUrl.img_url_thumb });
+    this.setState({ fusionedImg: imageUrl.img_url });
 
     const bgDom = $('.bg')[0];
-    $(bgDom).css('background-image', `url(${imageUrl.img_url_thumb})`);
+    $(bgDom).css('background-image', `url(${imageUrl.img_url})`);
   }
 
   handleError = () => {

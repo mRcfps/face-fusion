@@ -10,7 +10,13 @@ import content from './img/content.svg';
 import header from './img/header.svg';
 import btn from './img/btn.svg';
 
+// import router function
+import { Link } from 'react-router-dom';
+
 class App extends React.Component {
+  handleClick = () => {
+
+  }
 
   render() {
     return (
@@ -23,7 +29,7 @@ class App extends React.Component {
           <img src={header} alt="header" className="headerImg"/>
         </div>
         <div className="footer">
-          <img src={btn} alt="btn" className="btnImg"/>
+          <Link to="/selectScene"><img src={btn} alt="btn" className="btnImg" onClick={this.handleClick}/></Link>
         </div>
       </div>
     );  
