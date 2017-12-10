@@ -20,8 +20,8 @@ import hint from './img/hint.svg';
 // import css for this page
 import './css/HomePage.css';
 
-// import handle face fusion api
-import { faceFusion } from '../util/fusion';
+// import handle face fusion api and oss api
+import { faceFusion, ossUrl } from '../util/';
 
 export default class extends Component {
   state = {
@@ -36,6 +36,8 @@ export default class extends Component {
   componentDidMount() {
     const { location } = this.props;
     console.log('location', location.state);
+    const bgDom = $('.bg')[0];
+    $(bgDom).css('background-image', `url(${ossUrl + background})`);
   }
 
   success = (msg) => {

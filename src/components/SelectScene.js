@@ -14,6 +14,9 @@ import scene1 from './img/scene1.svg';
 import scene2 from './img/scene2.svg';
 import footer from './img/footer.svg';
 
+// import oss url
+import { ossUrl } from '../util/';
+
 
 export default class extends Component {
 
@@ -33,16 +36,16 @@ export default class extends Component {
   const constructScene = sceneClasses.map((item, key) => {
     // construct image show in single scene
     const singleScene = scenes[key].map((sceneItem, sceneKey) => (
-        <Link
-          to={{
-            pathname: '/homePage',
+      <Link
+        to={{
+          pathname: '/homePage',
 
-            // calculate the id in the img array
-            state: { id: (scenes[key].length * key) + sceneKey }
-          }}
-        >
-          <img src={sceneItem} alt={`sceneItem-${sceneKey}`} className="sceneImg"/>
-        </Link>
+          // calculate the id in the img array
+          state: { id: (scenes[key].length * key) + sceneKey }
+        }}
+      >
+        <img src={ossUrl + sceneItem} alt={`sceneItem-${sceneKey}`} className="sceneImg"/>
+      </Link>
     ));
 
     // for different status render different classname
@@ -53,7 +56,7 @@ export default class extends Component {
     return (
       <div className="scene">
         <div className="tag">
-          <div className={tagClass}><img src={item} alt={`item${key}`} className="tagWoman"/></div>
+          <div className={tagClass}><img src={ossUrl + item} alt={`item${key}`} className="tagWoman"/></div>
           <div className="sceneShow">{singleScene}</div>
         </div>
       </div>
@@ -64,14 +67,14 @@ export default class extends Component {
       <div id="selectScene">
 
         <div className="headerBg">
-          <img src={bgHeader} alt="bgHeaderImg" className="bgHeaderImg"/>
-          <Link to="/"><img src={back} alt="back" className="backImg"/></Link>
+          <img src={ossUrl + bgHeader} alt="bgHeaderImg" className="bgHeaderImg" />
+          <Link to="/"> <img src={back} alt="back" className="backImg" /> </Link>
         </div>
 
         {constructScene}
 
         <div className="selectFooter">
-          <img src={footer} alt="footer" className="footerImg"/>
+          <img src={ossUrl + footer} alt="footer" className="footerImg"/>
         </div>
 
       </div>
