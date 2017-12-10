@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 // import antd component
 import { Upload, message, Spin, Icon } from 'antd';
@@ -14,6 +15,7 @@ import background from './img/background.png';
 import back from './img/back.png';
 import download from './img/download.png';
 import upload from './img/upload.png';
+import hint from './img/hint.svg';
 
 // import css for this page
 import './css/HomePage.css';
@@ -25,6 +27,7 @@ export default class extends Component {
   state = {
     isUploading: false,
     isFusioning: false,
+    fusionSuccess: false,
     fileList: [],
     count: 0,
     fusionedImg: '',
@@ -53,7 +56,7 @@ export default class extends Component {
     // starting upload
     faceFusion(imageData, 'youtu_68981_20171208091242_4088', (err, imageUrl) => {
       console.log(err, imageUrl);
-      if (!err) {
+      if (!err && imageUrl.img_url) {
         // when success, replace background img
         this.handleReplaceBackground(imageUrl);
         this.success('融合成功！');
@@ -71,16 +74,19 @@ export default class extends Component {
     // let download icon can make effects
     this.setState({ fusionedImg: imageUrl.img_url });
 
+    // get the bg dom, and replace background-image
     const bgDom = $('.bg')[0];
     $(bgDom).css('background-image', `url(${imageUrl.img_url})`);
   }
 
   handleError = () => {
+    // if error, alert hint
     this.setState({ isUploading: false });
     this.error('无效的图片，请重新上传！');
   }
 
   handleSuccess = (res) => {
+    // if success, alert hint
     this.success('上传图片成功！');
     this.setState({ isUploading: false });
 
@@ -92,7 +98,7 @@ export default class extends Component {
   }
 
   handleStartUpload = () => {
-    this.setState({ isUploading: true });
+    this.setState({ isUploading: true, fusionSuccess: false });
   }
 
   render() {
@@ -123,23 +129,42 @@ export default class extends Component {
 
     return (
       <div className="homePage">
+
         <div className="bg"></div>
+
         <div className="footerTool">
+
+          <Link to="/selectScene">
             <img src={back} alt="back button" className="backIcon"/>
-            <div className="upload">
-              <PfUpload
-                component="div"
-                handleSuccess={this.handleSuccess}
-                handleError={this.handleError}
-                handleStartUpload={this.handleStartUpload}
-              >
-                <div className="innerUpload">
-                  <span className="uploadText">{uploadText}</span>
-                  { uploadStatusIcon }
-                </div>
-              </PfUpload>
-            </div>
-            { fusionedImg && <a href={fusionedImg} download="image.png"><img src={download} alt="download button" className="downloadIcon"/></a>}
+          </Link>
+
+          <div className="upload">
+
+            <PfUpload
+              component="div"
+              handleSuccess={this.handleSuccess}
+              handleError={this.handleError}
+              handleStartUpload={this.handleStartUpload}
+            >
+
+              <div className="innerUpload">
+                <span className="uploadText">{uploadText}</span>
+                { uploadStatusIcon }
+              </div>
+
+            </PfUpload>
+
+          </div>
+
+          { 
+            fusionedImg 
+            && ( 
+              <a href={fusionedImg} download="image.png">
+                <img src={download} alt="download button" className="downloadIcon"/>
+              </a>
+            )
+          }
+
         </div>
       </div>
     );
