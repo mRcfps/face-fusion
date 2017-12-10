@@ -27,6 +27,7 @@ export default class extends Component {
     isFusioning: false,
     fileList: [],
     count: 0,
+    fusionedImg: '',
   };
 
   success = (msg) => {
@@ -62,7 +63,9 @@ export default class extends Component {
   }
 
   handleReplaceBackground = (imageUrl) => {
-    console.log('imageUrl', imageUrl);
+    // let download icon can make effects
+    this.setState({ fusionedImg: imageUrl.img_url_thumb });
+
     const bgDom = $('.bg')[0];
     $(bgDom).css('background-image', `url(${imageUrl.img_url_thumb})`);
   }
@@ -105,7 +108,7 @@ export default class extends Component {
 
     // upload text status judge
     let uploadText = '上传头像';
-    const { isUploading, isFusioning } = this.state;
+    const { isUploading, isFusioning, fusionedImg } = this.state;
     if (isUploading) {
       uploadText = '上传中...';
     }
@@ -131,7 +134,7 @@ export default class extends Component {
                 </div>
               </PfUpload>
             </div>
-            <img src={download} alt="download button" className="downloadIcon"/>
+            { fusionedImg && <a href={fusionedImg} download="image.png"><img src={download} alt="download button" className="downloadIcon"/></a>}
         </div>
       </div>
     );
