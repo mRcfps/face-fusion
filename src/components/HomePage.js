@@ -30,6 +30,11 @@ export default class extends Component {
     fusionedImg: '',
   };
 
+  componentDidMount() {
+    const { location } = this.props;
+    console.log('location', location.state);
+  }
+
   success = (msg) => {
     message.success(msg);
   }

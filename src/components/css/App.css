@@ -98,6 +98,24 @@ body {
   .btnImg {
     width: 16em;
     margin-right: 3.8em;
+    margin-top: -1em;
+  }
+}
+@media screen and (min-width: 414px) {
+  .titleImg {
+    width: 13em;
+  }
+  .contentImg {
+    width: 17em;
+  }
+  .headerImg {
+    width: 4em;
+    margin-left: 12em;
+    margin-top: -13em;
+  }
+  .btnImg {
+    width: 16em;
+    margin-right: 3.8em;
     margin-top: 6em;
   }
 }

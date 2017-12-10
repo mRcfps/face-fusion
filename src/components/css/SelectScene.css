@@ -34,6 +34,9 @@ body {
 .tagWoman {
   width: 15em;
 }
+.tagMan {
+  text-align: right;
+}
 .sceneShow {
   width: 100%;
   text-align: center;
@@ -41,6 +44,13 @@ body {
 .sceneImg {
   margin-top: 2.5em;
   width: 90%;
+}
+.selectFooter {
+  margin-top: 5em;
+  width: 100%;
+}
+.footerImg {
+  width: 100%;
 }
 @media screen and (min-width: 320px) {
   .backImg {
