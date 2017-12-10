@@ -15,6 +15,8 @@ from __future__ import with_statement
 from datetime import datetime
 
 from fabric.api import *
+from fabric.colors import green
+
 import oss2
 
 env.hosts = ['root@60.205.183.134']
@@ -22,7 +24,7 @@ env.hosts = ['root@60.205.183.134']
 image_repo = 'registry.cn-hangzhou.aliyuncs.com/powerformer/face-fusion'
 container_name = 'face_fusion'
 oss_vendor = 'http://oss-cn-hangzhou.aliyuncs.com'
-bucket_url = 'http://face-fusion.oss-cn-hangzhou.aliyuncs.com'
+bucket_url = 'http://face-fusion.oss-cn-hangzhou.aliyuncs.com/'
 
 
 def read_api_auth():
@@ -37,10 +39,13 @@ def collect_static_files():
     static_files = []
 
     for filename in local("ls build/static/css", capture=True).split():
-        static_files.append('/static/css/' + filename)
+        static_files.append('static/css/' + filename)
 
     for filename in local("ls build/static/js", capture=True).split():
-        static_files.append('/static/js/' + filename)
+        static_files.append('static/js/' + filename)
+
+    for filename in local("ls build/static/media", capture=True).split():
+        static_files.append('static/media/' + filename)
 
     return static_files
 
@@ -50,23 +55,19 @@ def upload_to_oss(static_files):
     # Initialize api auth with access key
     print "Reading api auth keys ...",
     auth = read_api_auth()
-    print "Done."
+    print(green("Done"))
 
     bucket = oss2.Bucket(auth, oss_vendor, 'face-fusion')
 
     # Delete existing outdated static assets
     print "Deleting existing outdated static assets in OSS ...",
-    for file in oss2.ObjectIterator(bucket):
-        if file.key in ['css', 'js', 'static']:
-            bucket.delete_object(file.key)
-    print "Done."
+    bucket.delete_object('static')
+    print(green("Done"))
 
     print "Uploading latest static assets ...",
     for static_file in static_files:
-        bucket.put_object_from_file(
-            static_file.lstrip('/'),
-            'build' + static_file)
-    print "Done."
+        bucket.put_object_from_file(static_file, 'build/' + static_file)
+    print(green("Done"))
 
 
 def replace_links(static_files):
@@ -76,15 +77,13 @@ def replace_links(static_files):
         filedata = fp.read()
 
     for static_file in static_files:
-        filedata = filedata.replace(
-            static_file,
-            bucket_url + static_file)
+        filedata = filedata.replace('/' + static_file, bucket_url + static_file)
 
     # Write the modified html code back
     with open('build/index.html', 'w') as fp:
         fp.write(filedata)
 
-    print "Done."
+    print(green("Done"))
 
 
 def pull_image_and_redeploy():
