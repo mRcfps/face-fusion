@@ -18,6 +18,7 @@ import footer from './img/footer.svg';
 export default class extends Component {
 
   render() {
+    // construct recursive array
     const sceneClasses = [ tagWoman, tagMan ];
     const scenes = [ 
       [ 
@@ -29,46 +30,50 @@ export default class extends Component {
     ];
 
 
-    const constructScene = sceneClasses.map((item, key) => {
-      // construct image show in single scene
-      const singleScene = scenes[key].map((sceneItem, sceneKey) => (
-          <Link
-            to={{
-              pathname: '/homePage',
+  const constructScene = sceneClasses.map((item, key) => {
+    // construct image show in single scene
+    const singleScene = scenes[key].map((sceneItem, sceneKey) => (
+        <Link
+          to={{
+            pathname: '/homePage',
 
-              // calculate the id in the img array
-              state: { id: (scenes[key].length * key) + sceneKey }
-            }}
-          >
-            <img src={sceneItem} alt={`sceneItem-${sceneKey}`} className="sceneImg"/>
-          </Link>
-      ));
+            // calculate the id in the img array
+            state: { id: (scenes[key].length * key) + sceneKey }
+          }}
+        >
+          <img src={sceneItem} alt={`sceneItem-${sceneKey}`} className="sceneImg"/>
+        </Link>
+    ));
 
-      // for different status render different classname
-      const tagClass = classNames({
-        tagMan: (key === 1) ? true : false,
-      });
-      
-      return (
-        <div className="scene">
-          <div className="tag">
-            <div className={tagClass}><img src={item} alt={`item${key}`} className="tagWoman"/></div>
-            <div className="sceneShow">{singleScene}</div>
-          </div>
-        </div>
-      )
+    // for different status render different classname
+    const tagClass = classNames({
+      tagMan: (key === 1) ? true : false,
     });
+    
+    return (
+      <div className="scene">
+        <div className="tag">
+          <div className={tagClass}><img src={item} alt={`item${key}`} className="tagWoman"/></div>
+          <div className="sceneShow">{singleScene}</div>
+        </div>
+      </div>
+    )
+  });
 
     return (
       <div id="selectScene">
+
         <div className="headerBg">
           <img src={bgHeader} alt="bgHeaderImg" className="bgHeaderImg"/>
           <Link to="/"><img src={back} alt="back" className="backImg"/></Link>
         </div>
+
         {constructScene}
+
         <div className="selectFooter">
           <img src={footer} alt="footer" className="footerImg"/>
         </div>
+
       </div>
     );
   }

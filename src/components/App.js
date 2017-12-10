@@ -14,10 +14,6 @@ import btn from './img/btn.svg';
 import { Link } from 'react-router-dom';
 
 class App extends React.Component {
-  handleClick = () => {
-
-  }
-
   render() {
     return (
       <div id="app">
