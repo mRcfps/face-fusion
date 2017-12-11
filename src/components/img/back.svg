@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="34px" viewBox="0 0 23 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-21.9%" y="-15.6%" width="143.8%" height="143.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="主界面-copy-9" transform="translate(-38.000000, -563.000000)">
+            <g id="Group-2" transform="translate(34.000000, 556.000000)">
+                <g id="Group-3" filter="url(#filter-1)" transform="translate(0.000000, 6.000000)">
+                    <image id="后退-2" x="0" y="0" width="32" height="32" xlink:href="data:image/png;base64,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"></image>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

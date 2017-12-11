@@ -4,24 +4,28 @@
     <title>Group 5</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <text id="text-1" font-family="STSongti-SC-Bold, Songti SC" font-size="40" font-weight="bold" fill="#010101">
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#8C8A8C" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-2" font-family="STSongti-SC-Bold, Songti SC" font-size="40" font-weight="bold" fill="#010101">
             <tspan x="118" y="129">选 场 景</tspan>
         </text>
-        <filter x="-33.0%" y="-92.0%" width="166.0%" height="291.1%" filterUnits="objectBoundingBox" id="filter-2">
+        <filter x="-33.0%" y="-92.0%" width="166.0%" height="291.1%" filterUnits="objectBoundingBox" id="filter-3">
             <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feGaussianBlur stdDeviation="17.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="主界面-copy-4">
+        <g id="主界面-copy-7">
             <g id="Group-5">
-                <rect id="Rectangle-2" fill="#DBB381" x="0" y="0" width="375" height="201"></rect>
+                <rect id="Rectangle-2" fill="url(#linearGradient-1)" x="0" y="0" width="375" height="201"></rect>
                 <g id="选-场-景" fill-opacity="1" fill="#010101">
-                    <use filter="url(#filter-2)" xlink:href="#text-1"></use>
-                    <use xlink:href="#text-1"></use>
+                    <use filter="url(#filter-3)" xlink:href="#text-2"></use>
+                    <use xlink:href="#text-2"></use>
                 </g>
-                <rect id="Rectangle-3" fill-opacity="0.288807745" fill="#D8D8D8" x="0" y="117" width="375" height="82"></rect>
+                <rect id="Rectangle-3" fill-opacity="0.565811821" fill="#D8D8D8" x="0" y="117" width="375" height="82"></rect>
             </g>
         </g>
     </g>

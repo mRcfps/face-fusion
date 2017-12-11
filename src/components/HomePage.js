@@ -11,17 +11,41 @@ import PfUpload from './PfUpload';
 import $ from 'jquery';
 
 // import img
-import background from './img/background.png';
-import back from './img/back.png';
-import download from './img/download.png';
+import back from './img/back.svg';
+import download from './img/download.svg';
 import upload from './img/upload.png';
 import hint from './img/hint.svg';
+
+import bg1 from './img/bg1.png';
+import bg2 from './img/bg2.png';
+import bg3 from './img/bg3.png';
+import bg4 from './img/bg4.png';
+import bg5 from './img/bg5.png';
+import bg6 from './img/bg6.png';
+import bg7 from './img/bg7.png';
+import bg8 from './img/bg8.png';
+import bg9 from './img/bg9.png';
+import bg10 from './img/bg10.png';
 
 // import css for this page
 import './css/HomePage.css';
 
 // import handle face fusion api and oss api
 import { faceFusion, ossUrl } from '../util/';
+
+// construct bg array
+const bgArray = [
+  bg5,
+  bg7,
+  bg6,
+  bg8,
+  bg4,
+  bg10,
+  bg9,
+  bg3,
+  bg1,
+  bg2,
+];
 
 export default class extends Component {
   state = {
@@ -34,10 +58,11 @@ export default class extends Component {
   };
 
   componentDidMount() {
-    const { location } = this.props;
-    console.log('location', location.state);
+    const { id } = this.props.location.state;
     const bgDom = $('.bg')[0];
-    $(bgDom).css('background-image', `url(${ossUrl + background})`);
+    // add oss and file path
+    console.log('bg', `url(${bgArray[id]})`);
+    $(bgDom).css('background-image', `url(${bgArray[id]})`);
   }
 
   success = (msg) => {

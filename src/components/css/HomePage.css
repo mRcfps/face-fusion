@@ -19,6 +19,7 @@ body {
 }
 .bg {
   background-size: 100% 100%;
+  background-repeat: no-repeat;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -52,7 +53,7 @@ body {
   justify-content: center;
   background-color: #FFF;
   border-radius: 1.9em;
-  box-shadow: 0 0 20px 0 #FFF;
+  box-shadow: inset 3px 5px 10px 0 rgba(0, 0, 0, 0.5);
 }
 .innerUpload {
   height: 4.3em;
