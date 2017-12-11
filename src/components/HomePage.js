@@ -56,7 +56,7 @@ export default class extends Component {
     this.setState({ isFusioning: true });
 
     // starting upload
-    faceFusion(imageData, 'youtu_68981_20171208091242_4088', (err, imageUrl) => {
+    faceFusion(imageData, 'cf_lover_fanli', (err, imageUrl) => {
       console.log(err, imageUrl);
       if (!err && imageUrl.img_url) {
         // when success, replace background img
