@@ -7,25 +7,25 @@ import './css/SelectScene.css';
 
 // import picture
 import bgHeader from './img/bgHeader.svg';
-import back from './img/back.png';
+import back from './img/back.svg';
 
-import scene1 from './img/scene1.png';
-import scene2 from './img/scene2.png';
-import scene3 from './img/scene3.png';
-import scene4 from './img/scene4.png';
-import scene5 from './img/scene5.png';
-import scene6 from './img/scene6.png';
-import scene7 from './img/scene7.png';
-import scene8 from './img/scene8.png';
-import scene9 from './img/scene9.png';
-import scene10 from './img/scene10.png';
+import scene1 from './img/scene1.svg';
+import scene2 from './img/scene2.svg';
+import scene3 from './img/scene3.svg';
+import scene4 from './img/scene4.svg';
+import scene5 from './img/scene5.svg';
+import scene6 from './img/scene6.svg';
+import scene7 from './img/scene7.svg';
+import scene8 from './img/scene8.svg';
+import scene9 from './img/scene9.svg';
+import scene10 from './img/scene10.svg';
 
-import tag1 from './img/tag1.png';
-import tag2 from './img/tag2.png';
-import tag3 from './img/tag3.png';
-import tag4 from './img/tag4.png';
-import tag5 from './img/tag5.png';
-import tag6 from './img/tag6.png';
+import tag1 from './img/tag1.svg';
+import tag2 from './img/tag2.svg';
+import tag3 from './img/tag3.svg';
+import tag4 from './img/tag4.svg';
+import tag5 from './img/tag5.svg';
+import tag6 from './img/tag6.svg';
 
 import footer from './img/footer.svg';
 
@@ -50,23 +50,23 @@ export default class extends Component {
         scene8,
       ],  
       [
-        scene6,
         scene7,
+        scene6,
       ],
       [
         scene3,
         scene9,
       ],
       [
-        scene4,
         scene10,
+        scene4,
       ],
       [
         scene5,
       ],
       [
-        scene1,
         scene2,
+        scene1,
       ],
     ];
 
@@ -85,19 +85,14 @@ export default class extends Component {
         }}
         key={sceneKey}
       >
-        <img src={sceneItem} alt={`sceneItem-${sceneKey}`} className="sceneImg"/>
+        <img src={ossUrl + sceneItem} alt={`sceneItem-${sceneKey}`} className="sceneImg"/>
       </Link>
     ));
-
-    // for different status render different classname
-    const tagClass = classNames({
-      tagMan: (key %2 === 1) ? true : false,
-    });
     
     return (
       <div className="scene" key={key}>
         <div className="tag">
-          <div className={tagClass}><img src={item} alt={`item${key}`} className="tagWoman"/></div>
+          <div className="tagInner"><img src={ossUrl + item} alt={`item${key}`} className="tagItem"/></div>
           <div className="sceneShow">{singleScene}</div>
         </div>
       </div>
@@ -108,14 +103,14 @@ export default class extends Component {
       <div id="selectScene">
 
         <div className="headerBg">
-          <img src={bgHeader} alt="bgHeaderImg" className="bgHeaderImg" />
-          <Link to="/"> <img src={back} alt="back" className="backImg" /> </Link>
+          <img src={ossUrl + bgHeader} alt="bgHeaderImg" className="bgHeaderImg" />
+          <Link to="/"> <img src={ossUrl + back} alt="back" className="backImg" /> </Link>
         </div>
 
         {constructScene}
 
         <div className="selectFooter">
-          <img src={footer} alt="footer" className="footerImg"/>
+          <img src={ossUrl + footer} alt="footer" className="footerImg"/>
         </div>
 
       </div>

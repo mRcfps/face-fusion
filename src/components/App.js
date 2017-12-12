@@ -9,6 +9,7 @@ import title from './img/title.svg';
 import content from './img/content.svg';
 import header from './img/header.svg';
 import btn from './img/btn.svg';
+import bgApp from './img/bgApp.png';
 
 // import oss url
 import { ossUrl } from '../util/';
@@ -16,10 +17,20 @@ import { ossUrl } from '../util/';
 // import router function
 import { Link } from 'react-router-dom';
 
+// import jquery for better operation
+import $ from 'jquery';
+
 class App extends React.Component {
+  componentDidMount() {
+    // get the bg dom, and replace background-image
+    const bgDom = $('.bg')[0];
+    $(bgDom).css('background-image', `url(${bgApp})`);
+  }
+
   render() {
     return (
       <div id="app">
+        <div className="bg"></div>
         <div className="title">
           <img src={ossUrl + title} alt="title" className="titleImg"/>
         </div>

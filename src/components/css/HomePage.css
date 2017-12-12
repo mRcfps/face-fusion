@@ -30,6 +30,13 @@ body {
   width: 100%;
   text-align: center;
 }
+.headerTool {
+  padding-top: 5.1em;
+  padding-left: 2.7em;
+  padding-right: 2.7em;
+  display: flex;
+  justify-content: space-between;
+}
 .footerTool {
   position: absolute;
   top: 82%;
@@ -45,35 +52,33 @@ body {
   background: black;
 }
 .upload {
-  width: 43%;
+  width: 42%;
   margin: 0 4.1em;
-  height: 4.3em;
+  height: 4em;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #FFF;
   border-radius: 1.9em;
-  box-shadow: inset 3px 5px 10px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
 .innerUpload {
-  height: 4.3em;
+  height: 4em;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .uploadText {
   font-family: none;
-  font-size: 20px;
-  color: rgba(17, 17, 17, 0.6);
-  font-weight: bolder;
+  font-size: 17px;
+  color: #000000;
+  font-weight: 500;
 }
 .uploadIcon {
-  width: 20px;
-  height: 20px;
-  margin-left: .8em;
+  margin-right: .8em;
 }
 .isUploading {
-  margin-left: .8em;
+  margin-right: 1.2em;
 }
 .ant-upload-list-item {
   display: none;
@@ -87,10 +92,6 @@ body {
   width: 100%;
 }
 @media screen and (max-width: 320px) {
-  .backIcon {
-    width: 13px;
-    height: 22px;
-  }
   .uploadText {
     font-family: none;
     font-size: 16px;
@@ -109,35 +110,36 @@ body {
     box-shadow: 0 0 20px 0 #FFF;
   }
   .downloadIcon {
-    width: 24px;
-    height: 22px;
+    width: 2.4em;
   }
 }
 @media screen and (min-width: 360px) {
   .backImg {
     top: -16em;
     left: 2.5em;
-    width: 1.4em;
   }
 }
 @media screen and (min-width: 375px) {
   .btnImg {
-    width: 14em;
     margin-right: 4.2em;
     margin-top: 6em;
+  }
+  .uploadIcon {
+    width: 2.5em;
+  }
+  .downloadIcon {
+    width: 3em;
   }
 }
 @media screen and (min-width: 412px) {
   .backImg {
     top: -18em;
     left: 2.7em;
-    width: 1.6em;
   }
 }
 @media screen and (min-width: 414px) {
   .backImg {
     top: -18em;
     left: 2.7em;
-    width: 1.6em;
   }
 }

@@ -13,7 +13,7 @@ import $ from 'jquery';
 // import img
 import back from './img/back.svg';
 import download from './img/download.svg';
-import upload from './img/upload.png';
+import upload from './img/upload.svg';
 import hint from './img/hint.svg';
 
 import bg1 from './img/bg1.png';
@@ -47,6 +47,20 @@ const bgArray = [
   bg2,
 ];
 
+// face fusion api
+const faceFusionApi = [
+  'youtu_69152_20171211171232_4210',
+  'youtu_69152_20171211171337_4212',
+  'youtu_69152_20171211171256_4211',
+  'youtu_69152_20171211171450_4213',
+  'youtu_69152_20171211171203_4209',
+  'youtu_69152_20171211210519_4220',
+  'youtu_69152_20171211210532_4221',
+  'youtu_69152_20171211171101_4208',
+  'youtu_69152_20171211171027_4206',
+  'youtu_69152_20171211171042_4207',
+];
+
 export default class extends Component {
   state = {
     isUploading: false,
@@ -58,6 +72,7 @@ export default class extends Component {
   };
 
   componentDidMount() {
+    // id is the order about scene
     const { id } = this.props.location.state;
     const bgDom = $('.bg')[0];
     // add oss and file path
@@ -80,8 +95,11 @@ export default class extends Component {
     // update the upload status to isLoading
     this.setState({ isFusioning: true });
 
+    // id is the order about scene
+    const { id } = this.props.location.state;
+
     // starting upload
-    faceFusion(imageData, 'cf_lover_fanli', (err, imageUrl) => {
+    faceFusion(imageData, faceFusionApi[id], (err, imageUrl) => {
       console.log(err, imageUrl);
       if (!err && imageUrl.img_url) {
         // when success, replace background img
@@ -141,7 +159,7 @@ export default class extends Component {
     const uploadStatusIcon = (
       (this.state.isUploading || this.state.isFusioning)
       ? ( <span className="isUploading"><Spin indicator={uploadIcon} /></span> )
-      : ( <img src={upload} alt="upload button" className="uploadIcon"/> )
+      : ( <img src={ossUrl + upload} alt="upload button" className="uploadIcon"/> )
     );
 
     // upload text status judge
@@ -159,11 +177,22 @@ export default class extends Component {
 
         <div className="bg"></div>
 
-        <div className="footerTool">
-
+        <div className="headerTool">
           <Link to="/selectScene">
-            <img src={back} alt="back button" className="backIcon"/>
+            <img src={ossUrl + back} alt="back button" className="backIcon"/>
           </Link>
+
+          { 
+            fusionedImg 
+            && ( 
+              <a href={fusionedImg} download="image.png">
+                <img src={ossUrl + download} alt="download button" className="downloadIcon"/>
+              </a>
+            )
+          }
+        </div>
+
+        <div className="footerTool">
 
           <div className="upload">
 
@@ -175,22 +204,13 @@ export default class extends Component {
             >
 
               <div className="innerUpload">
-                <span className="uploadText">{uploadText}</span>
                 { uploadStatusIcon }
+                <span className="uploadText">{uploadText}</span>
               </div>
 
             </PfUpload>
 
           </div>
-
-          { 
-            fusionedImg 
-            && ( 
-              <a href={fusionedImg} download="image.png">
-                <img src={download} alt="download button" className="downloadIcon"/>
-              </a>
-            )
-          }
 
         </div>
       </div>
