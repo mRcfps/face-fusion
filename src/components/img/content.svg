@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="150px" height="363px" viewBox="0 0 150 363" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="198px" height="319px" viewBox="0 0 198 319" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
-    <title>Group 2</title>
+    <title>约5万年前，我们祖先就用最原始的缝纫工具</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-size="18" font-family="STSongti-SC-Regular, Songti SC" font-weight="normal">
-        <g id="主界面-copy-3" transform="translate(-38.000000, -167.000000)" fill="#010101">
-            <g id="Group-2" transform="translate(38.000000, 163.000000)">
-                <text id="服饰的盛宴，">
-                    <tspan x="0" y="19">服饰的盛宴，</tspan>
-                </text>
-                <text id="选择你喜欢的服装，">
-                    <tspan x="0" y="67">选择你喜欢的服装，</tspan>
-                </text>
-                <text id="开始我们的故事。">
-                    <tspan x="0" y="115">开始我们的故事。</tspan>
-                </text>
-                <text id="游戏规则：">
-                    <tspan x="0" y="165">游戏规则：</tspan>
-                </text>
-                <text id="点击开始换装，">
-                    <tspan x="0" y="215">点击开始换装，</tspan>
-                </text>
-                <text id="选择场景，">
-                    <tspan x="0" y="265">选择场景，</tspan>
-                </text>
-                <text id="上传头像，">
-                    <tspan x="0" y="314">上传头像，</tspan>
-                </text>
-                <text id="大功告成。">
-                    <tspan x="0" y="364">大功告成。</tspan>
-                </text>
-            </g>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-weight="normal" font-size="18" font-family="STSongti-SC-Regular, Songti SC" line-spacing="30">
+        <g id="封面" transform="translate(-38.000000, -178.000000)" fill="#010101">
+            <text id="约5万年前，我们祖先就用最原始的缝纫工具">
+                <tspan x="38" y="191">约5万年前，我们祖先就</tspan>
+                <tspan x="38" y="221">用最原始的缝纫工具——</tspan>
+                <tspan x="38" y="251">骨针缝制简单衣物；2000</tspan>
+                <tspan x="38" y="281">多年前开创的“丝绸之</tspan>
+                <tspan x="38" y="311">路”，使中国古老的文化</tspan>
+                <tspan x="38" y="341">走向世界，并对世界服饰</tspan>
+                <tspan x="38" y="371">产生重要影响……</tspan>
+                <tspan x="38" y="401">中华民族服饰文化博大精</tspan>
+                <tspan x="38" y="431">深，想不想看看古代的</tspan>
+                <tspan x="38" y="461">你？盛世美颜，请跟小编</tspan>
+                <tspan x="38" y="491">一起来穿越~</tspan>
+            </text>
         </g>
     </g>
 </svg>

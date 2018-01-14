@@ -35,8 +35,8 @@ class App extends React.Component {
           <img src={ossUrl + title} alt="title" className="titleImg"/>
         </div>
         <div className="content">
-          <img src={ossUrl + content} alt="content" className="contentImg"/>
-          <img src={ossUrl + header} alt="header" className="headerImg"/>
+          <img src={content} alt="content" className="contentImg"/>
+          <img src={header} alt="header" className="headerImg"/>
         </div>
         <div className="footer">
           <Link to="/selectScene"><img src={ossUrl + btn} alt="btn" className="btnImg" onClick={this.handleClick}/></Link>

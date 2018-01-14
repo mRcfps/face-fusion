@@ -23,17 +23,17 @@ body {
     width: 9em;
   }
   #app .contentImg {
-    width: 13em;
+    width: 18em;
   }
   #app .headerImg {
-    width: 3em;
-    margin-left: 8em;
-    margin-top: -9em;
+    width: 2.5em;
+    margin-left: 5.3em;
+    margin-top: -7em;
   }
   #app .btnImg {
     width: 12em;
-    margin-right: 3em;
     margin-top: 4em;
+    margin-right: 0;
   }
 }
 @media screen and (min-width: 360px) {
@@ -41,37 +41,36 @@ body {
     width: 11em;
   }
   #app .contentImg {
-    width: 15em;
+    width: 20em;
+    margin-top: -1em;
   }
   #app .headerImg {
-    width: 3.5em;
-    margin-left: 10em;
-    margin-top: -11em;
+    width: 3em;
+    margin-left: 7.3em;
+    margin-top: -9em;
   }
   #app .btnImg {
     width: 14em;
-    margin-right: 4.2em;
     margin-top: 4em;
+    margin-right: 0;
   }
-}
-@media screen and (min-width: 375px) {
 }
 @media screen and (min-width: 412px) {
   #app .titleImg {
     width: 13em;
   }
   #app .contentImg {
-    width: 17em;
+    width: 22em;
   }
   #app .headerImg {
-    width: 4em;
-    margin-left: 12em;
-    margin-top: -13em;
+    width: 3.5em;
+    margin-left: 9.3em;
+    margin-top: -11em;
   }
   #app .btnImg {
     width: 16em;
-    margin-right: 3.8em;
     margin-top: 2em;
+    margin-right: 0;
   }
 }
 @media screen and (min-width: 414px) {
@@ -79,17 +78,17 @@ body {
     width: 13em;
   }
   #app .contentImg {
-    width: 17em;
+    width: 22em;
   }
   #app .headerImg {
-    width: 4em;
-    margin-left: 12em;
-    margin-top: -13em;
+    width: 3.5em;
+    margin-left: 9.3em;
+    margin-top: -11em;
   }
   #app .btnImg {
     width: 16em;
-    margin-right: 3.8em;
     margin-top: 6em;
+    margin-right: 0;
   }
 }
 .subRoot {
@@ -123,5 +122,5 @@ body {
   margin-top: -7em;
 }
 .footer {
-  text-align: right;
+  text-align: center;
 }

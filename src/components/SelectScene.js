@@ -103,8 +103,8 @@ export default class extends Component {
       <div id="selectScene">
 
         <div className="headerBg">
-          <img src={ossUrl + bgHeader} alt="bgHeaderImg" className="bgHeaderImg" />
-          <Link to="/"> <img src={ossUrl + back} alt="back" className="backImg" /> </Link>
+          <img src={bgHeader} alt="bgHeaderImg" className="bgHeaderImg" />
+          <Link to="/"> <div className="backImg"><img src={ossUrl + back} alt="back" /></div> </Link>
         </div>
 
         {constructScene}
