@@ -27,6 +27,10 @@ import tag4 from './img/tag4.svg';
 import tag5 from './img/tag5.svg';
 import tag6 from './img/tag6.svg';
 
+import selectScene1 from './img/selectScene1.svg';
+import selectScene2 from './img/selectScene2.svg';
+import selectScene3 from './img/selectScene3.svg';
+
 import footer from './img/footer.svg';
 
 // import oss url
@@ -38,12 +42,9 @@ export default class extends Component {
   render() {
     // construct recursive array
     const sceneClasses = [
-      tag1,
-      tag2,
-      tag3,
-      tag4,
-      tag5,
-      tag6,
+      selectScene1,
+      selectScene2,
+      selectScene3,
     ];
     const scenes = [ 
       [ 
@@ -74,8 +75,8 @@ export default class extends Component {
   let totalNum = 0;
   const constructScene = sceneClasses.map((item, key) => {
     // construct image show in single scene
-    const singleScene = scenes[key].map((sceneItem, sceneKey) => (
 
+    const singleScene = (
       <Link
         to={{
           pathname: '/homePage',
@@ -83,16 +84,15 @@ export default class extends Component {
           // calculate the id in the img array
           state: { id: totalNum++ }
         }}
-        key={sceneKey}
+        key={key}
       >
-        <img src={ossUrl + sceneItem} alt={`sceneItem-${sceneKey}`} className="sceneImg"/>
+        <img src={item} alt={`sceneClasses-${key}`} className="sceneImg"/>
       </Link>
-    ));
+    );
     
     return (
       <div className="scene" key={key}>
         <div className="tag">
-          <div className="tagInner"><img src={ossUrl + item} alt={`item${key}`} className="tagItem"/></div>
           <div className="sceneShow">{singleScene}</div>
         </div>
       </div>
@@ -112,7 +112,6 @@ export default class extends Component {
         <div className="selectFooter">
           <img src={ossUrl + footer} alt="footer" className="footerImg"/>
         </div>
-
       </div>
     );
   }

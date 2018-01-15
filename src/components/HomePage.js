@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 // import antd component
 import { Upload, message, Spin, Icon } from 'antd';
+import Swiper from 'swiper';
+import './css/swiper.min.css';
 
 // import upload file component
 import PfUpload from './PfUpload';
@@ -16,16 +18,23 @@ import download from './img/download.svg';
 import upload from './img/upload.svg';
 import hint from './img/hint.svg';
 
-import bg1 from './img/bg1.png';
-import bg2 from './img/bg2.png';
-import bg3 from './img/bg3.png';
-import bg4 from './img/bg4.png';
-import bg5 from './img/bg5.png';
-import bg6 from './img/bg6.png';
-import bg7 from './img/bg7.png';
-import bg8 from './img/bg8.png';
-import bg9 from './img/bg9.png';
-import bg10 from './img/bg10.png';
+import bg1 from './img/bg1.svg';
+import bg2 from './img/bg2.svg';
+import bg3 from './img/bg3.svg';
+import bg4 from './img/bg4.svg';
+import bg5 from './img/bg5.svg';
+import bg6 from './img/bg6.svg';
+import bg7 from './img/bg7.svg';
+import bg8 from './img/bg8.svg';
+import bg9 from './img/bg9.svg';
+import bg10 from './img/bg10.svg';
+
+import bgHeaderImg1 from './img/bgHeader1.svg';
+import bgHeaderImg2 from './img/bgHeader2.svg';
+import bgHeaderImg3 from './img/bgHeader3.svg';
+import bgHeaderImg4 from './img/bgHeader4.svg';
+import bgHeaderImg5 from './img/bgHeader5.svg';
+import bgHeaderImg6 from './img/bgHeader6.svg';
 
 // import css for this page
 import './css/HomePage.css';
@@ -75,9 +84,24 @@ export default class extends Component {
     // id is the order about scene
     const { id } = this.props.location.state;
     const bgDom = $('.bg')[0];
+
     // add oss and file path
-    console.log('bg', `url(${bgArray[id]})`);
-    $(bgDom).css('background-image', `url(${bgArray[id]})`);
+    // console.log('bg', `url(${bgArray[id]})`);
+    // $(bgDom).css('background-image', `url(${bgArray[id]})`);
+
+    this.swiper = new Swiper('.swiper-container', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+          rotate: 60,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows : true,
+        },
+    });
   }
 
   success = (msg) => {
@@ -159,11 +183,11 @@ export default class extends Component {
     const uploadStatusIcon = (
       (this.state.isUploading || this.state.isFusioning)
       ? ( <span className="isUploading"><Spin indicator={uploadIcon} /></span> )
-      : ( <img src={ossUrl + upload} alt="upload button" className="uploadIcon"/> )
+      : ( <img src={upload} alt="upload button" className="uploadIcon"/> )
     );
 
     // upload text status judge
-    let uploadText = '上传头像';
+    let uploadText = '穿  越';
     const { isUploading, isFusioning, fusionedImg } = this.state;
     if (isUploading) {
       uploadText = '上传中...';
@@ -174,22 +198,22 @@ export default class extends Component {
 
     return (
       <div className="homePage">
-
-        <div className="bg"></div>
-
-        <div className="headerTool">
-          <Link to="/selectScene">
-            <img src={ossUrl + back} alt="back button" className="backIcon"/>
-          </Link>
-
-          { 
-            fusionedImg 
-            && ( 
-              <a href={fusionedImg} download="image.png">
-                <img src={ossUrl + download} alt="download button" className="downloadIcon"/>
-              </a>
-            )
-          }
+        <div className="headerBg">
+          <img src={bgHeaderImg1} alt="bgHeaderImg" className="bgHeaderImg" />
+          <Link to="/selectScene"> <div className="backImg"><img src={ossUrl + back} alt="back" /></div> </Link>
+        </div>
+        <div className="swiper-container">
+          <div className="swiper-wrapper">
+            <div className="swiper-slide" style={{
+              backgroundImage: `url(${bg5})`
+              }}></div>
+            <div className="swiper-slide" style={{
+              backgroundImage: `url(${bg2})`
+              }}></div>
+            <div className="swiper-slide" style={{
+              backgroundImage: `url(${bg3})`
+              }}></div>
+          </div>
         </div>
 
         <div className="footerTool">
@@ -217,3 +241,12 @@ export default class extends Component {
     );
   }
 }
+
+// { 
+//   fusionedImg 
+//   && ( 
+//     <a href={fusionedImg} download="image.png">
+//       <img src={ossUrl + download} alt="download button" className="downloadIcon"/>
+//     </a>
+//   )
+// }
