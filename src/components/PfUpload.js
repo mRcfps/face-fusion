@@ -11,7 +11,9 @@ export default class extends Component {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        this.props.handleSuccess(reader.result);
+
+        // explode reader.result and file object.
+        this.props.handleSuccess(reader.result, file);
       }
       // start uploadfile and convert to base64
       this.props.handleStartUpload()

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="242px" height="382px" viewBox="0 0 242 382" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="242px" height="426px" viewBox="0 0 242 426" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
-    <title>Rectangle</title>
+    <title>Group 2</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <rect id="path-1" x="77" y="132" width="222" height="362" rx="8"></rect>
+        <rect id="path-1" x="0" y="0" width="222" height="362" rx="8"></rect>
         <filter x="-7.2%" y="-3.9%" width="114.4%" height="108.8%" filterUnits="objectBoundingBox" id="filter-2">
             <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
@@ -17,9 +17,14 @@
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="选装" transform="translate(-67.000000, -124.000000)">
-            <g id="Rectangle">
-                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                <use fill="url(#pattern-3)" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <g id="Group-2" transform="translate(77.000000, 132.000000)">
+                <text id="明朝官员服饰" font-family="STSongti-SC-Regular, Songti SC" font-size="20" font-weight="normal" fill="#484846">
+                    <tspan x="51" y="414">明朝官员服饰</tspan>
+                </text>
+                <g id="Rectangle">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="url(#pattern-3)" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
             </g>
         </g>
     </g>

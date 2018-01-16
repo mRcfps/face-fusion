@@ -157,3 +157,6 @@ body {
   width: 275px;
   height: 500px;
 }
+.ant-modal-body {
+  padding: 0;
+}
