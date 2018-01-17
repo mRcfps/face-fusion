@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import fileSize from 'filesize';
+import browserImageSize from 'browser-image-size';
+import Cropper from 'cropperjs';
 
 // import antd component
 import { Upload, message, Spin, Icon, Modal } from 'antd';
@@ -113,6 +115,7 @@ export default class extends Component {
     fusionedImg: '',
     showModal: false,
     canDoFaceFusion: false,
+    imageDimensions: null,
   };
 
   componentDidMount() {
@@ -171,17 +174,19 @@ export default class extends Component {
     const { activeScene } = this.state;
 
     // starting upload
-    faceFusion(getBaseData, faceFusionApi[dynastyMark][activeScene], (err, imageUrl) => {
+    faceFusion(getBaseData, faceFusionApi[dynastyMark][activeScene], async (err, imageUrl) => {
       console.log(err, imageUrl);
       if (!err && imageUrl.img_url) {
+
         // when success, replace background img
         that.setState({ 
-          uploadedImg: imageUrl.img_url,
           fusionSuccess: true,
+          uploadedImg: imageUrl.img_url,
         });
+
         this.success('融合成功！');
-
-
+        
+        
         // replace the download link
         const downLoadBtn = $('.ant-modal-footer').find('.ant-btn')[1];
         $(downLoadBtn).html(`
@@ -253,10 +258,17 @@ export default class extends Component {
       message.destory();
       this.error('对不起，照片不符合要求！', 3);
     } else if (fusionSuccess) {
-      return 
+      return;
     } else {
       this.handleUpload(uploadedImg);
     }
+  }
+
+  handleProcessed = (err, src) => {
+    
+    this.setState({
+      uploadedImg: src,
+    });
   }
 
   render() {
@@ -280,7 +292,7 @@ export default class extends Component {
 
     // upload text status judge
     let uploadText = '上传照片';
-    const { isUploading, isFusioning, fusionedImg } = this.state;
+    const { isUploading, isFusioning, fusionedImg, fusionSuccess, imageDimensions } = this.state;
     if (isUploading) {
       uploadText = '上传中...';
     }
@@ -293,11 +305,11 @@ export default class extends Component {
     const needDisplayImg = this.state.isFusioning 
     ? (
       <Spin tip="融合中...">
-        <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%" }} />
+        <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%", maxWidth: "100%" }} id="fushionedImg" />
       </Spin>
     )
     : (
-      <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%" }} />
+      <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%", maxWidth: "100%" }} id="fushionedImg" />
     )
 
     return (
@@ -308,14 +320,14 @@ export default class extends Component {
           onOk={this.handleOk}
           okText={this.state.fusionSuccess ? '下载图片' : '开始融合'}
         >
-            {
-              this.state.isUploading
-              ? (
-                <Spin tip="加载中...">
-                </Spin>
-              )
-              : needDisplayImg
-            }
+          {
+            this.state.isUploading
+            ? (
+              <Spin tip="加载中...">
+              </Spin>
+            )
+            : needDisplayImg
+          }
         </Modal>
         <div className="headerBg">
           <img src={headerImgArray[dynastyMark]} alt="bgHeaderImg" className="bgHeaderImg" />
