@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import fileSize from 'filesize';
 import browserImageSize from 'browser-image-size';
 import Cropper from 'cropperjs';
+import Swiper from 'swiper/dist/js/swiper.min.js';
+import './css/swiper.min.css';
 
 // import antd component
 import { Upload, message, Spin, Icon, Modal } from 'antd';
-import Swiper from 'swiper';
-import './css/swiper.min.css';
 
 // import upload file component
 import PfUpload from './PfUpload';
