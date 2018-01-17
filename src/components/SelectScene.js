@@ -12,6 +12,9 @@ import back from './img/back.svg';
 import selectScene1 from './img/selectScene1.svg';
 import selectScene2 from './img/selectScene2.svg';
 import selectScene3 from './img/selectScene3.svg';
+import selectScene4 from './img/selectScene4.svg';
+import selectScene5 from './img/selectScene5.svg';
+import selectScene6 from './img/selectScene6.svg';
 
 import footer from './img/footer.svg';
 
@@ -27,9 +30,9 @@ export default class extends Component {
       selectScene1,
       selectScene2,
       selectScene3,
-      selectScene1,
-      selectScene2,
-      selectScene3,
+      selectScene4,
+      selectScene5,
+      selectScene6,
     ];
 
   // total number

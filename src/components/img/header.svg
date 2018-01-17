@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="457px" viewBox="0 0 32 457" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="32px" height="426px" viewBox="0 0 32 426" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
     <title>Group 4</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="封面" transform="translate(-309.000000, -58.000000)">
+        <g id="封面" transform="translate(-309.000000, -49.000000)">
             <g id="Group-4" transform="translate(310.000000, 41.000000)">
-                <text id="一-起-穿越-,-看古代的你-?" font-family="STSongti-SC-Bold, Songti SC" font-size="28" font-weight="bold" fill="#010101">
-                    <tspan x="1" y="30">一</tspan>
-                    <tspan x="1" y="70">起</tspan>
-                    <tspan x="1" y="110">穿</tspan>
-                    <tspan x="1" y="150">越     </tspan>
-                    <tspan x="10" y="190"> ,</tspan>
-                    <tspan x="1" y="230">看</tspan>
-                    <tspan x="1" y="270">古</tspan>
-                    <tspan x="1" y="310">代</tspan>
-                    <tspan x="1" y="350">的</tspan>
-                    <tspan x="1" y="390">你</tspan>
-                    <tspan x="10" y="430"> ?</tspan>
+                <text id="想不想看看古代的你-?" font-family="STSongti-SC-Bold, Songti SC" font-size="28" font-weight="bold" fill="#010101">
+                    <tspan x="1" y="30">想</tspan>
+                    <tspan x="1" y="70">不</tspan>
+                    <tspan x="1" y="110">想</tspan>
+                    <tspan x="1" y="150">看</tspan>
+                    <tspan x="1" y="190">看</tspan>
+                    <tspan x="1" y="230">古</tspan>
+                    <tspan x="1" y="270">代</tspan>
+                    <tspan x="1" y="310">的</tspan>
+                    <tspan x="1" y="350">你</tspan>
+                    <tspan x="10" y="390"> ?</tspan>
                 </text>
-                <path d="M21.1730513,447.000005 C18.764939,447.000005 16.5826917,447.973374 14.994586,449.545411 C13.40101,447.979738 11.2176383,447.011719 8.80496734,447.013994 C3.93628813,447.017345 -0.00230871292,450.974244 1.01535829e-06,455.847052 C0.0145886369,467.033646 15.0221202,473 15.0221202,473 C15.0221202,473 30.01397,466.99783 29.9999902,455.804565 C29.9943375,450.935507 26.0417305,446.994717 21.1730513,447.000005 Z" id="Shape" stroke="#000000" stroke-width="1.5" fill-rule="nonzero"></path>
+                <path d="M21.1730513,407.000005 C18.764939,407.000005 16.5826917,407.973374 14.994586,409.545411 C13.40101,407.979738 11.2176383,407.011719 8.80496734,407.013994 C3.93628813,407.017345 -0.00230871292,410.974244 1.01535829e-06,415.847052 C0.0145886369,427.033646 15.0221202,433 15.0221202,433 C15.0221202,433 30.01397,426.99783 29.9999902,415.804565 C29.9943375,410.935507 26.0417305,406.994717 21.1730513,407.000005 Z" id="Shape" stroke="#000000" stroke-width="1.5" fill-rule="nonzero"></path>
             </g>
         </g>
     </g>
