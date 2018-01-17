@@ -50,7 +50,7 @@ export default class extends Component {
         }}
         key={key}
       >
-        <img src={item} alt={`sceneClasses-${key}`} className="sceneImg"/>
+        <img src={ossUrl + item} alt={`sceneClasses-${key}`} className="sceneImg"/>
       </Link>
     );
     
@@ -67,7 +67,7 @@ export default class extends Component {
       <div id="selectScene">
 
         <div className="headerBg">
-          <img src={bgHeader} alt="bgHeaderImg" className="bgHeaderImg" />
+          <img src={ossUrl + bgHeader} alt="bgHeaderImg" className="bgHeaderImg" />
           <Link to="/"> <div className="backImg"><img src={ossUrl + back} alt="back" /></div> </Link>
         </div>
 

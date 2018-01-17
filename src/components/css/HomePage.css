@@ -136,13 +136,19 @@ body {
   .downloadIcon {
     width: 2.4em;
   }
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 20em;
+    height: 39em;
+  }
 }
 @media screen and (min-width: 360px) {
   .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 24em;
-    height: 43em;
+    width: 22em;
+    height: 42em;
   }
 }
 @media screen and (min-width: 375px) {
@@ -155,24 +161,24 @@ body {
   .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 24em;
-    height: 43em;
+    width: 22em;
+    height: 42em;
   }
 }
 @media screen and (min-width: 412px) {
   .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 25em;
-    height: 47em;
+    width: 23em;
+    height: 46em;
   }
 }
 @media screen and (min-width: 414px) {
   .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 27em;
-    height: 48em;
+    width: 25em;
+    height: 46em;
   }
 }
 .swiper-container {

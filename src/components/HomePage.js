@@ -283,7 +283,7 @@ export default class extends Component {
     const uploadStatusIcon = (
       (this.state.isUploading || this.state.isFusioning)
       ? ( <span className="isUploading"><Spin indicator={uploadIcon} /></span> )
-      : ( <img src={upload} alt="upload button" className="uploadIcon"/> )
+      : ( <img src={ossUrl + upload} alt="upload button" className="uploadIcon"/> )
     );
 
     // dynastyMark about this page.
@@ -304,11 +304,11 @@ export default class extends Component {
     const needDisplayImg = this.state.isFusioning 
     ? (
       <Spin tip="融合中...">
-        <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%", maxWidth: "100%" }} id="fushionedImg" />
+        <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%", maxWidth: "100%", height: '100%' }} id="fushionedImg" />
       </Spin>
     )
     : (
-      <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%", maxWidth: "100%" }} id="fushionedImg" />
+      <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%", maxWidth: "100%", height: '100%' }} id="fushionedImg" />
     )
 
     return (
