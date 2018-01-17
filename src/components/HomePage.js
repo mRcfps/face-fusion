@@ -255,7 +255,6 @@ export default class extends Component {
   handleOk = () => {
     const { canDoFaceFusion, uploadedImg, fusionSuccess } = this.state;
     if (!canDoFaceFusion || !uploadedImg) {
-      message.destory();
       this.error('对不起，照片不符合要求！', 3);
     } else if (fusionSuccess) {
       return;
