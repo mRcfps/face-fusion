@@ -103,15 +103,14 @@ body {
   background-color: transparent;
 }
 .bg {
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   height: 100%;
   width: 100%;
   position: absolute;
   z-index: -1;
 }
 .title {
-  padding-top: 7.2em;
+  padding-top: 5.2em;
   padding-left: 4.1em;
 }
 .titleImg {

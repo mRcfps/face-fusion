@@ -13,6 +13,9 @@ body {
   padding: 0;
   font-size: 10px;
 }
+body {
+  overflow: auto;
+}
 .homePage {
   width: 100%;
   height: 100%;
@@ -173,20 +176,14 @@ body {
     height: 46em;
   }
 }
-@media screen and (min-width: 414px) {
-  .swiper-slide {
-    background-position: center;
-    background-size: cover;
-    width: 25em;
-    height: 46em;
-  }
-}
-.swiper-container {
-  width: 100%;
-  padding-top: 0px;
-  padding-bottom: 31px;
-  margin-top: 0px;
-}
-.ant-modal-body {
+.mainModal .ant-modal-body {
   padding: 0;
+  height: 30em;
+  overflow: auto;
+}
+.ant-modal-content {
+  overflow: auto;
+}
+.waterMarkModal .ant-modal {
+  top: 250px;
 }

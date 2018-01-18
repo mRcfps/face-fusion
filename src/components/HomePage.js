@@ -15,6 +15,9 @@ import PfUpload from './PfUpload';
 // import jquery for better operation
 import $ from 'jquery';
 
+// import wide-holding fetch api
+import 'isomorphic-fetch';
+
 // import img
 import back from './img/back.svg';
 import download from './img/download.svg';
@@ -116,6 +119,7 @@ export default class extends Component {
     showModal: false,
     canDoFaceFusion: false,
     imageDimensions: null,
+    takeOutWaterMark: false,
   };
 
   componentDidMount() {
@@ -128,19 +132,19 @@ export default class extends Component {
     // $(bgDom).css('background-image', `url(${bgArray[id]})`);
 
     this.swiper = new Swiper('.swiper-container', {
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        coverflowEffect: {
-          rotate: 60,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows : true,
-        },
-        uploadedImg: '',
-    });
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 60,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows : true,
+      },
+      uploadedImg: '',
+  });
 
     // use that trace the active swiper
     const that = this;
@@ -192,6 +196,18 @@ export default class extends Component {
         $(downLoadBtn).html(`
           <a href="${imageUrl.img_url}" download="image.png">下载图片</a>
         `);
+
+        const modalFooterDiv = $('.ant-modal-footer').find('div')[0];
+        $(modalFooterDiv).append(
+          '<button type="button" class="ant-btn ant-btn-primary" id="removeWaterMark"><span>去水印</span></span></button>'
+        );
+
+        $('#removeWaterMark').click(() => {
+          console.log('click');
+          that.setState({
+            takeOutWaterMark: true,
+          });
+        });
       } else {
         // else error, hint error message
         this.error('融合失败！请换一张图片');
@@ -216,7 +232,7 @@ export default class extends Component {
     // detect this image size, when greater than 
     const detectFileSize = parseFloat(fileSize(file.size));
     if (detectFileSize > 500) {
-      this.error('文件过大，请重新上传！', 10);
+      this.error('啊哦😯！文件过大', 10);
     }
 
     this.setState({
@@ -270,6 +286,48 @@ export default class extends Component {
     });
   }
 
+  handleWaterCancel = (e) => {
+    this.setState({
+      takeOutWaterMark: false,
+    });
+  }
+
+  handleWaterOk = async (e) => {
+    const { uploadedImg } = this.state;
+
+    // save this state of that
+    const that = this;
+
+    try {
+
+      const resultBuffer = await fetch('http://antiwatermark.avosapps.us', {
+        method: 'POST',
+        body: JSON.stringify({
+          image: uploadedImg,
+        }),
+      })
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      });
+
+      const reader = new FileReader();
+      reader.onload = () => {
+
+        // explode reader.result and file object.
+        that.setState({
+          uploadedImg: reader.result,
+        });
+      }
+      // completed cut and convert to base64
+      reader.readAsDataURL(resultBuffer);
+    } catch (e) {
+      this.error('很遗憾！去水印失败 = =');
+    }
+  }
+
   render() {
     // the uploadIcon for the isUploading status 
     const uploadIcon = ( 
@@ -283,7 +341,7 @@ export default class extends Component {
     const uploadStatusIcon = (
       (this.state.isUploading || this.state.isFusioning)
       ? ( <span className="isUploading"><Spin indicator={uploadIcon} /></span> )
-      : ( <img src={ossUrl + upload} alt="upload button" className="uploadIcon"/> )
+      : ( <img src={upload} alt="upload button" className="uploadIcon"/> )
     );
 
     // dynastyMark about this page.
@@ -291,7 +349,15 @@ export default class extends Component {
 
     // upload text status judge
     let uploadText = '上传照片';
-    const { isUploading, isFusioning, fusionedImg, fusionSuccess, imageDimensions } = this.state;
+    const { 
+      isUploading, 
+      isFusioning, 
+      fusionedImg, 
+      fusionSuccess, 
+      imageDimensions,
+      takeOutWaterMark, 
+      showModal,
+    } = this.state;
     if (isUploading) {
       uploadText = '上传中...';
     }
@@ -308,17 +374,32 @@ export default class extends Component {
       </Spin>
     )
     : (
-      <img src={this.state.uploadedImg} alt="" style={{ display: "inline-block", width: "100%", maxWidth: "100%", height: '100%' }} id="fushionedImg" />
+      <img src={this.state.uploadedImg} alt="" style={
+        { display: "inline-block", width: "100%", maxWidth: "100%", height: '100%', zIndex: 1000 }
+      } id="fushionedImg" />
     )
 
     return (
       <div className="homePage">
         <Modal
-          visible={this.state.showModal}
+          visible={takeOutWaterMark}
+          closable={false}
+          wrapClassName="waterMarkModal"
+          onCancel={this.handleWaterCancel}
+          onOk={this.handleWaterOk}
+          okText="确认去除"
+        >
+          <p>去水印花费的时间较长，一般5-10秒，亲确认要去除的嘛？</p>
+        </Modal>
+        <Modal
+          visible={showModal}
           onCancel={this.handleCancel}
           onOk={this.handleOk}
-          okText={this.state.fusionSuccess ? '下载图片' : '开始融合'}
+          closable={false}
+          wrapClassName="mainModal"
+          okText={fusionSuccess ? '下载图片' : '开始融合'}
         >
+          <div className="uploadBox">
           {
             this.state.isUploading
             ? (
@@ -327,9 +408,9 @@ export default class extends Component {
             )
             : needDisplayImg
           }
+          </div>
         </Modal>
         <div className="headerBg">
-          <img src={headerImgArray[dynastyMark]} alt="bgHeaderImg" className="bgHeaderImg" />
           <Link to="/selectScene"> <div className="backImg"><img src={ossUrl + back} alt="back" /></div> </Link>
         </div>
         <div className="swiper-container">
@@ -340,7 +421,7 @@ export default class extends Component {
                   key={key}
                   className="swiper-slide" 
                   style={{
-                    backgroundImage: `url(${ossUrl + bgImage})`
+                    backgroundImage: `url(${bgImage})`
                   }}
                 ></div>
               ))
