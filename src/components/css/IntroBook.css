@@ -1,0 +1,7 @@
+#introBook .introContent {
+  width: 100%;
+  text-align: center;
+}
+#introBook .book {
+  margin-bottom: 2em;
+}

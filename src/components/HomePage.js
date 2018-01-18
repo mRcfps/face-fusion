@@ -340,7 +340,7 @@ export default class extends Component {
                   key={key}
                   className="swiper-slide" 
                   style={{
-                    backgroundImage: `url(${bgImage})`
+                    backgroundImage: `url(${ossUrl + bgImage})`
                   }}
                 ></div>
               ))

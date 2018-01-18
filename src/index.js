@@ -16,6 +16,7 @@ import {
   App,
   HomePage,
   SelectScene,
+  IntroBook,
 } from './components/';
 
 const Root = () => (
@@ -24,6 +25,7 @@ const Root = () => (
       <Route exact path="/" component={App} />
       <Route path="/homePage" component={HomePage} />
       <Route path="/selectScene" component={SelectScene} />
+      <Route path="/introBook" component={IntroBook} />
     </div>
   </Router>
 )

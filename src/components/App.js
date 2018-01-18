@@ -10,6 +10,7 @@ import content from './img/content.svg';
 import header from './img/header.svg';
 import btn from './img/btn.svg';
 import bgApp from './img/bgApp.png';
+import footer from './img/footer.svg';
 
 // import oss url
 import { ossUrl } from '../util/';
@@ -39,7 +40,11 @@ class App extends React.Component {
           <img src={ossUrl + header} alt="header" className="headerImg"/>
         </div>
         <div className="footer">
-          <Link to="/selectScene"><img src={ossUrl + btn} alt="btn" className="btnImg" onClick={this.handleClick}/></Link>
+          <Link to="/selectScene"><img src={btn} alt="btn" className="btnImg" onClick={this.handleClick}/></Link>
+        </div>
+
+        <div className="selectFooter">
+          <Link to="/introBook"><img src={footer} alt="footer" className="footerImg"/></Link>
         </div>
       </div>
     );  

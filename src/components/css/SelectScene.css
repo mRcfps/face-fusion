@@ -25,12 +25,12 @@ body {
   position: relative;
 }
 .bgHeaderImg {
-  width: 19em;
+  width: 16em;
   margin-top: 1.3em;
 }
 .backImg {
   position: absolute;
-  top: 5.1em;
+  top: 4em;
   left: 1.9em;
 }
 .scene {
@@ -55,6 +55,7 @@ body {
 }
 .selectFooter {
   margin-top: 5em;
+  margin-bottom: 5em;
   width: 100%;
 }
 .footerImg {

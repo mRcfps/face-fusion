@@ -55,6 +55,14 @@ body {
     margin-right: 0;
   }
 }
+@media screen and (min-width: 375px) {
+  #app .titleImg {
+    width: 11.5em;
+  }
+  #app .contentImg {
+    width: 19.5em;
+  }
+}
 @media screen and (min-width: 412px) {
   #app .titleImg {
     width: 13em;
