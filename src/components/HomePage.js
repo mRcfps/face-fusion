@@ -1,3 +1,4 @@
+// import wide-holding fetch api
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import fileSize from 'filesize';
@@ -7,7 +8,7 @@ import Swiper from 'swiper/dist/js/swiper.min.js';
 import './css/swiper.min.css';
 
 // import antd component
-import { Upload, message, Spin, Icon, Modal } from 'antd';
+import { Upload, message, Spin, Icon, Modal, Alert } from 'antd';
 
 // import upload file component
 import PfUpload from './PfUpload';
@@ -15,8 +16,8 @@ import PfUpload from './PfUpload';
 // import jquery for better operation
 import $ from 'jquery';
 
-// import wide-holding fetch api
-import 'isomorphic-fetch';
+// convert to base64
+import base64 from 'base-64';
 
 // import img
 import back from './img/back.svg';
@@ -47,6 +48,9 @@ import './css/HomePage.css';
 
 // import handle face fusion api and oss api
 import { faceFusion, ossUrl } from '../util/';
+
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 
 const headerImgArray = [
   bgHeaderImg1,
@@ -120,6 +124,7 @@ export default class extends Component {
     canDoFaceFusion: false,
     imageDimensions: null,
     takeOutWaterMark: false,
+    isTakingOutWaterMark: false,
   };
 
   componentDidMount() {
@@ -192,12 +197,12 @@ export default class extends Component {
         
         
         // replace the download link
-        const downLoadBtn = $('.ant-modal-footer').find('.ant-btn')[1];
+        const downLoadBtn = $('.mainModal .ant-modal-footer').find('.ant-btn')[1];
         $(downLoadBtn).html(`
           <a href="${imageUrl.img_url}" download="image.png">下载图片</a>
         `);
 
-        const modalFooterDiv = $('.ant-modal-footer').find('div')[0];
+        const modalFooterDiv = $('.mainModal .ant-modal-footer').find('div')[0];
         $(modalFooterDiv).append(
           '<button type="button" class="ant-btn ant-btn-primary" id="removeWaterMark"><span>去水印</span></span></button>'
         );
@@ -249,7 +254,20 @@ export default class extends Component {
       isUploading: true, 
       fusionSuccess: false,
       showModal: true,
+      isFusioning: false,
+      activeScene: 0,
+      fusionSuccess: false,
+      fusionedImg: '',
+      canDoFaceFusion: false,
+      takeOutWaterMark: false,
+      isTakingOutWaterMark: false,
     });
+
+    $('#removeWaterMark').remove()
+
+    // replace the download link
+    const downLoadBtn = $('.ant-modal-footer').find('.ant-btn')[1];
+    $(downLoadBtn).html('<span>开始融合</span>');
   }
 
   handleCancel = (e) => {
@@ -261,6 +279,8 @@ export default class extends Component {
       fusionedImg: '',
       showModal: false,
       canDoFaceFusion: false,
+      takeOutWaterMark: false,
+      isTakingOutWaterMark: false,
     });
 
     // replace the download link
@@ -292,39 +312,69 @@ export default class extends Component {
     });
   }
 
+  getCutOfImage = async () => {
+  }
+
   handleWaterOk = async (e) => {
     const { uploadedImg } = this.state;
 
+    this.setState({
+      isTakingOutWaterMark: true,
+    });
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({
+        image: uploadedImg,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
     // save this state of that
     const that = this;
+    console.log('uploadedImg', uploadedImg);
+
+    console.log('options', options);
+    console.log('fetch', fetch)
 
     try {
+      const response = await fetch('http://antiwatermark.avosapps.us/', options)
+      
+      console.log('response', response);
+      // ReadableStream convert to Blob
+      const buffer = await response.blob();
 
-      const resultBuffer = await fetch('http://antiwatermark.avosapps.us', {
-        method: 'POST',
-        body: JSON.stringify({
-          image: uploadedImg,
-        }),
-      })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return response.json();
-      });
-
+      // filereader for convert blob to base64
       const reader = new FileReader();
       reader.onload = () => {
-
-        // explode reader.result and file object.
+        // get the base64 result 
+        const result = reader.result;
         that.setState({
-          uploadedImg: reader.result,
+          uploadedImg: result,
+          takeOutWaterMark: false,
+          isTakingOutWaterMark: false,
         });
+
+        this.success('去水印成功！请下载您的穿越照片！');
+        // replace the download link
+        const downLoadBtn = $('.mainModal .ant-modal-footer').find('.ant-btn')[1];
+        $(downLoadBtn).html(`
+          <a href="${result}" download="image.png">下载图片</a>
+        `);
       }
-      // completed cut and convert to base64
-      reader.readAsDataURL(resultBuffer);
+
+      // start uploadfile and convert to base64
+      reader.readAsDataURL(buffer);
+
     } catch (e) {
+      console.log('e', e);
       this.error('很遗憾！去水印失败 = =');
+      that.setState({
+        takeOutWaterMark: false,
+        isTakingOutWaterMark: false,
+      });
     }
   }
 
@@ -357,6 +407,7 @@ export default class extends Component {
       imageDimensions,
       takeOutWaterMark, 
       showModal,
+      isTakingOutWaterMark,
     } = this.state;
     if (isUploading) {
       uploadText = '上传中...';
@@ -377,7 +428,24 @@ export default class extends Component {
       <img src={this.state.uploadedImg} alt="" style={
         { display: "inline-block", width: "100%", maxWidth: "100%", height: '100%', zIndex: 1000 }
       } id="fushionedImg" />
+    );
+
+    const cutWaterMarkMessage = (
+      <Alert
+        message="这是一条需要注意的消息"
+        description="去水印花费的时间比较长，一般5-10秒左右，亲可以坐下来喝杯茶哟~"
+        type="warning"
+      />
+    );
+
+    // display cutwatermark
+    const selectCutWaterMarkMessage = isTakingOutWaterMark
+    ? (
+      <Spin tip="去除水印中...">
+        {cutWaterMarkMessage}
+      </Spin>
     )
+    : cutWaterMarkMessage;
 
     return (
       <div className="homePage">
@@ -389,7 +457,7 @@ export default class extends Component {
           onOk={this.handleWaterOk}
           okText="确认去除"
         >
-          <p>去水印花费的时间较长，一般5-10秒，亲确认要去除的嘛？</p>
+          {selectCutWaterMarkMessage}
         </Modal>
         <Modal
           visible={showModal}
