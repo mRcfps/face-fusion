@@ -68,6 +68,7 @@ export default class extends Component {
       >
         <input
           type="file"
+          className="inputFile"
           ref={this.saveFileInput}
           style={{ display: 'none' }}
           onChange={this.handleChange}

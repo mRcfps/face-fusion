@@ -9,12 +9,12 @@ import './css/SelectScene.css';
 import bgHeader from './img/bgHeader.svg';
 import back from './img/back.svg';
 
-import selectScene1 from './img/selectScene1.svg';
-import selectScene2 from './img/selectScene2.svg';
-import selectScene3 from './img/selectScene3.svg';
-import selectScene4 from './img/selectScene4.svg';
-import selectScene5 from './img/selectScene5.svg';
-import selectScene6 from './img/selectScene6.svg';
+import selectScene1 from './img/selectScene1.jpg';
+import selectScene2 from './img/selectScene2.jpg';
+import selectScene3 from './img/selectScene3.jpg';
+import selectScene4 from './img/selectScene4.jpg';
+import selectScene5 from './img/selectScene5.jpg';
+import selectScene6 from './img/selectScene6.jpg';
 
 import footer from './img/footer.svg';
 
@@ -74,7 +74,7 @@ export default class extends Component {
         {constructScene}
 
         <div className="selectFooter">
-          <img src={ossUrl + footer} alt="footer" className="footerImg"/>
+          <Link to="/introBook"><img src={ossUrl + footer} alt="footer" className="footerImg"/></Link>
         </div>
       </div>
     );

@@ -7,6 +7,8 @@ import Cropper from 'cropperjs';
 import Swiper from 'swiper/dist/js/swiper.min.js';
 import './css/swiper.min.css';
 
+import createHistory from "history/createBrowserHistory"
+
 // import antd component
 import { Upload, message, Spin, Icon, Modal, Alert } from 'antd';
 
@@ -25,23 +27,16 @@ import download from './img/download.svg';
 import upload from './img/upload.svg';
 import hint from './img/hint.svg';
 
-import bg1 from './img/bg1.svg';
-import bg2 from './img/bg2.svg';
-import bg3 from './img/bg3.svg';
-import bg4 from './img/bg4.svg';
-import bg5 from './img/bg5.svg';
-import bg6 from './img/bg6.svg';
-import bg7 from './img/bg7.svg';
-import bg8 from './img/bg8.svg';
-import bg9 from './img/bg9.svg';
-import bg10 from './img/bg10.svg';
-
-import bgHeaderImg1 from './img/bgHeader1.svg';
-import bgHeaderImg2 from './img/bgHeader2.svg';
-import bgHeaderImg3 from './img/bgHeader3.svg';
-import bgHeaderImg4 from './img/bgHeader4.svg';
-import bgHeaderImg5 from './img/bgHeader5.svg';
-import bgHeaderImg6 from './img/bgHeader6.svg';
+import bg1 from './img/bg1.jpg';
+import bg2 from './img/bg2.jpg';
+import bg3 from './img/bg3.jpg';
+import bg4 from './img/bg4.jpg';
+import bg5 from './img/bg5.jpg';
+import bg6 from './img/bg6.jpg';
+import bg7 from './img/bg7.jpg';
+import bg8 from './img/bg8.jpg';
+import bg9 from './img/bg9.jpg';
+import bg10 from './img/bg10.jpg';
 
 // import css for this page
 import './css/HomePage.css';
@@ -52,14 +47,9 @@ import { faceFusion, ossUrl } from '../util/';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-const headerImgArray = [
-  bgHeaderImg1,
-  bgHeaderImg2,
-  bgHeaderImg3,
-  bgHeaderImg4,
-  bgHeaderImg5,
-  bgHeaderImg6,
-];
+
+// create history
+export const history = createHistory();
 
 // construct bg array
 const bgArray = [
@@ -137,23 +127,17 @@ export default class extends Component {
     // $(bgDom).css('background-image', `url(${bgArray[id]})`);
 
     this.swiper = new Swiper('.swiper-container', {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      coverflowEffect: {
-        rotate: 60,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows : true,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
       },
-      uploadedImg: '',
-  });
+    });
 
     // use that trace the active swiper
     const that = this;
     this.swiper.on('slideChange', () => {
+      console.log('this.swiper.activeIndex', this.swiper.activeIndex);
       that.setState({
         activeScene: this.swiper.activeIndex,
       });
@@ -181,6 +165,9 @@ export default class extends Component {
     // id is the order about scene
     const { id: dynastyMark } = this.props.location.state;
     const { activeScene } = this.state;
+    console.log('activeScene', activeScene);
+    
+    console.log('face', faceFusionApi[dynastyMark][activeScene]);
 
     // starting upload
     faceFusion(getBaseData, faceFusionApi[dynastyMark][activeScene], async (err, imageUrl) => {
@@ -215,7 +202,17 @@ export default class extends Component {
         });
       } else {
         // else error, hint error message
-        this.error('融合失败！请换一张图片');
+        if (err.ret === "1000") {
+          this.error('未识别到人脸！请换一张图片哟');
+        }
+
+        if (err.ret === "-1000") {
+          this.error('参数错误！请换一张图片哟');
+        }
+
+        if (err.ret === "-1001") {
+          this.error('图像处理错误！请换一张图片哟');
+        }
       }
 
       // update the upload status to loaded
@@ -250,12 +247,12 @@ export default class extends Component {
   }
 
   handleStartUpload = () => {
+    console.log('start');
     this.setState({ 
       isUploading: true, 
       fusionSuccess: false,
       showModal: true,
       isFusioning: false,
-      activeScene: 0,
       fusionSuccess: false,
       fusionedImg: '',
       canDoFaceFusion: false,
@@ -272,9 +269,14 @@ export default class extends Component {
 
   handleCancel = (e) => {
     this.setState({
+      showModal: false,
+    });
+  }
+
+  handleClose = () => {
+    this.setState({
       isUploading: false,
       isFusioning: false,
-      activeScene: 0,
       fusionSuccess: false,
       fusionedImg: '',
       showModal: false,
@@ -361,8 +363,12 @@ export default class extends Component {
         // replace the download link
         const downLoadBtn = $('.mainModal .ant-modal-footer').find('.ant-btn')[1];
         $(downLoadBtn).html(`
-          <a href="${result}" download="image.png">下载图片</a>
+          <span>下载图片</span>
         `);
+        $(downLoadBtn).click(() => {
+          history.push('/showImage', { image: result });
+        });
+
       }
 
       // start uploadfile and convert to base64
@@ -391,7 +397,7 @@ export default class extends Component {
     const uploadStatusIcon = (
       (this.state.isUploading || this.state.isFusioning)
       ? ( <span className="isUploading"><Spin indicator={uploadIcon} /></span> )
-      : ( <img src={upload} alt="upload button" className="uploadIcon"/> )
+      : ( <img src={ossUrl + upload} alt="upload button" className="uploadIcon"/> )
     );
 
     // dynastyMark about this page.
@@ -454,6 +460,7 @@ export default class extends Component {
           closable={false}
           wrapClassName="waterMarkModal"
           onCancel={this.handleWaterCancel}
+          cancelText="取消"
           onOk={this.handleWaterOk}
           okText="确认去除"
         >
@@ -463,8 +470,10 @@ export default class extends Component {
           visible={showModal}
           onCancel={this.handleCancel}
           onOk={this.handleOk}
+          afterClose={this.handleClose}
           closable={false}
           wrapClassName="mainModal"
+          cancelText="取消"
           okText={fusionSuccess ? '下载图片' : '开始融合'}
         >
           <div className="uploadBox">
@@ -478,9 +487,6 @@ export default class extends Component {
           }
           </div>
         </Modal>
-        <div className="headerBg">
-          <Link to="/selectScene"> <div className="backImg"><img src={ossUrl + back} alt="back" /></div> </Link>
-        </div>
         <div className="swiper-container">
           <div className="swiper-wrapper">
             {
@@ -489,13 +495,17 @@ export default class extends Component {
                   key={key}
                   className="swiper-slide" 
                   style={{
-                    backgroundImage: `url(${bgImage})`
+                    backgroundImage: `url(${ossUrl + bgImage})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '100%',
                   }}
                 ></div>
               ))
             }
           </div>
+          <div className="swiper-pagination"></div>
         </div>
+          <Link to="/selectScene"> <div className="backImg"><img src={ossUrl + back} alt="back" /></div> </Link>
 
         <div className="footerTool">
 
@@ -506,6 +516,7 @@ export default class extends Component {
               handleSuccess={this.handleSuccess}
               handleError={this.handleError}
               handleStartUpload={this.handleStartUpload}
+              disabled={false}
             >
 
               <div className="innerUpload">

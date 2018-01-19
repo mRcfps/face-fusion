@@ -17,15 +17,17 @@ import {
   HomePage,
   SelectScene,
   IntroBook,
+  ShowImage,
 } from './components/';
 
 const Root = () => (
-  <Router>
+  <Router forceRefresh={true}>
     <div className="subRoot">
       <Route exact path="/" component={App} />
       <Route path="/homePage" component={HomePage} />
       <Route path="/selectScene" component={SelectScene} />
       <Route path="/introBook" component={IntroBook} />
+      <Route path="/showImage" component={ShowImage} />
     </div>
   </Router>
 )
