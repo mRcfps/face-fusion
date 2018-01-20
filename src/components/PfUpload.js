@@ -22,6 +22,8 @@ export default class extends Component {
     } else {
       this.props.handleError();
     }
+
+    this.fileInput.value = '';
   }
 
   handleClick = () => {
@@ -70,7 +72,7 @@ export default class extends Component {
           type="file"
           className="inputFile"
           ref={this.saveFileInput}
-          style={{ display: 'none' }}
+          style={{ position: 'absolute', left: -9999 }}
           onChange={this.handleChange}
           accept={accept}
           multiple={multiple}

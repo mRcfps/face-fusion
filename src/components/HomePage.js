@@ -80,26 +80,26 @@ const bgArray = [
 // face fusion api
 const faceFusionApi = [
   [
-    'youtu_69152_20171211171232_4210',
+    'youtu_68981_20180109220002_5759',
   ],
   [
-    'youtu_69152_20171211171337_4212',
-    'youtu_69152_20171211171256_4211',
+    'youtu_68981_20180109220023_5762',
+    'youtu_68981_20180113163914_5920',
   ],
   [
-    'youtu_69152_20171211171450_4213',
-    'youtu_69152_20171211171203_4209',
+    'youtu_68981_20180109220032_5764',
+    'youtu_68981_20180109215952_5757',
   ],
   [
-    'youtu_69152_20171211210519_4220',
-    'youtu_69152_20171211210532_4221',
+    'youtu_68981_20180109220049_5766',
+    'youtu_68981_20180109220041_5765',
   ],
   [
-    'youtu_69152_20171211171101_4208',
+    'youtu_68981_20180109215941_5756',
   ],
   [
-    'youtu_69152_20171211171027_4206',
-    'youtu_69152_20171211171042_4207',
+    'youtu_68981_20180109215910_5754',
+    'youtu_68981_20180109215929_5755',
   ],
 ];
 
@@ -115,12 +115,12 @@ export default class extends Component {
     imageDimensions: null,
     takeOutWaterMark: false,
     isTakingOutWaterMark: false,
+    takeOutWaterMarkSuccess: false,
   };
 
   componentDidMount() {
     // id is the order about scene
-    const { id } = this.props.location.state;
-    const bgDom = $('.bg')[0];
+    this.success('左右滑动能够选择不同的场景哦😯', 4);
 
     // add oss and file path
     // console.log('bg', `url(${bgArray[id]})`);
@@ -257,6 +257,7 @@ export default class extends Component {
       fusionedImg: '',
       canDoFaceFusion: false,
       takeOutWaterMark: false,
+      takeOutWaterMarkSuccess: false,
       isTakingOutWaterMark: false,
     });
 
@@ -282,6 +283,7 @@ export default class extends Component {
       showModal: false,
       canDoFaceFusion: false,
       takeOutWaterMark: false,
+      takeOutWaterMarkSuccess: false,
       isTakingOutWaterMark: false,
     });
 
@@ -291,11 +293,15 @@ export default class extends Component {
   }
 
   handleOk = () => {
-    const { canDoFaceFusion, uploadedImg, fusionSuccess } = this.state;
+    const { canDoFaceFusion, uploadedImg, fusionSuccess, takeOutWaterMarkSuccess } = this.state;
     if (!canDoFaceFusion || !uploadedImg) {
       this.error('对不起，照片不符合要求！', 3);
     } else if (fusionSuccess) {
-      return;
+      if (takeOutWaterMarkSuccess) {
+        this.success('长按图片可以保存哟😝');
+      } else {
+        return;
+      }
     } else {
       this.handleUpload(uploadedImg);
     }
@@ -357,18 +363,13 @@ export default class extends Component {
           uploadedImg: result,
           takeOutWaterMark: false,
           isTakingOutWaterMark: false,
+          takeOutWaterMarkSuccess: true,
         });
 
-        this.success('去水印成功！请下载您的穿越照片！');
+        this.success('去水印成功！长按图片下载您的穿越照片！', 10);
         // replace the download link
         const downLoadBtn = $('.mainModal .ant-modal-footer').find('.ant-btn')[1];
-        $(downLoadBtn).html(`
-          <span>下载图片</span>
-        `);
-        $(downLoadBtn).click(() => {
-          history.push('/showImage', { image: result });
-        });
-
+        $(downLoadBtn).html('<span>下载图片</span>');
       }
 
       // start uploadfile and convert to base64
@@ -380,6 +381,7 @@ export default class extends Component {
       that.setState({
         takeOutWaterMark: false,
         isTakingOutWaterMark: false,
+        takeOutWaterMarkSuccess: false,
       });
     }
   }

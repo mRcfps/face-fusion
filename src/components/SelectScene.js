@@ -74,7 +74,10 @@ export default class extends Component {
         {constructScene}
 
         <div className="selectFooter">
-          <Link to="/introBook"><img src={ossUrl + footer} alt="footer" className="footerImg"/></Link>
+          <Link to={{
+            pathname: "/introBook",
+            state: { from: "/selectScene" }
+          }}><img src={ossUrl + footer} alt="footer" className="footerImg"/></Link>
         </div>
       </div>
     );

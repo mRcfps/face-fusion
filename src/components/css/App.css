@@ -17,6 +17,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: transparent;
+  overflow: auto;
 }
 @media screen and (min-width: 320px) {
   #app .titleImg {

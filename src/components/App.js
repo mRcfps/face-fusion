@@ -44,7 +44,10 @@ class App extends React.Component {
         </div>
 
         <div className="selectFooter">
-          <Link to="/introBook"><img src={ossUrl + footer} alt="footer" className="footerImg"/></Link>
+          <Link to={{
+            pathname: "/introBook",
+            state: { from: '/' }
+          }}><img src={ossUrl + footer} alt="footer" className="footerImg"/></Link>
         </div>
       </div>
     );  
