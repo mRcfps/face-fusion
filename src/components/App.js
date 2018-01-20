@@ -25,6 +25,7 @@ import $ from 'jquery';
 class App extends React.Component {
   state = {
     headerImg: header,
+    cnt: 0,
   };
 
   success = (msg, duration = 3) => {
@@ -46,9 +47,11 @@ class App extends React.Component {
   }
 
   handleClick = () => {
-    this.success('哈哈哈哈，多谢赞赏😝！');
+    const { cnt } = this.state;
+    this.success(`哈哈哈哈，多谢赞赏😝！+${cnt + 1}🤝`);
     this.setState({
       headerImg: header1,
+      cnt: cnt + 1,
     });
 
     localStorage.setItem('clicked', true);
