@@ -120,11 +120,14 @@ export default class extends Component {
 
   componentDidMount() {
     // id is the order about scene
-    this.success('左右滑动能够选择不同的场景哦😯', 4);
+    const { id: dynastyMark } = this.props.location.state;
+    
 
-    // add oss and file path
-    // console.log('bg', `url(${bgArray[id]})`);
-    // $(bgDom).css('background-image', `url(${bgArray[id]})`);
+    console.log('face', faceFusionApi[dynastyMark]);
+    if (faceFusionApi[dynastyMark].length > 1) {
+      // id is the order about scene
+    this.success('左右滑动能够选择不同的场景哦😯', 4);
+    }
 
     this.swiper = new Swiper('.swiper-container', {
       spaceBetween: 30,
