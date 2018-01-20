@@ -234,7 +234,7 @@ export default class extends Component {
     // detect this image size, when greater than 
     const detectFileSize = parseFloat(fileSize(file.size));
     if (detectFileSize > 500) {
-      this.error('啊哦😯！文件过大', 10);
+      this.error('啊哦😯！文件过大，建议上传500KB以内的图片哦', 10);
     }
 
     this.setState({
