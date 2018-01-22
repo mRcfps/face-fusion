@@ -184,7 +184,7 @@ export default class extends Component {
         });
         this.error('融合超时，请检查网络连接哦！😯');
       }
-    }, 10000);
+    }, 20000);
 
     // starting upload
     faceFusion(getBaseData, faceFusionApi[dynastyMark][activeScene], async (err, imageUrl) => {
@@ -219,15 +219,15 @@ export default class extends Component {
         });
       } else {
         // else error, hint error message
-        if (err.ret === "1000") {
+        if (imageUrl.ret === "1000") {
           this.error('未识别到人脸！请换一张图片哟');
         }
 
-        if (err.ret === "-1000") {
+        if (imageUrl.ret === "-1000") {
           this.error('参数错误！请换一张图片哟');
         }
 
-        if (err.ret === "-1001") {
+        if (imageUrl.ret === "-1001") {
           this.error('图像处理错误！请换一张图片哟');
         }
       }
@@ -249,14 +249,15 @@ export default class extends Component {
     this.setState({ isUploading: false });
 
     // detect this image size, when greater than 
-    const detectFileSize = parseFloat(fileSize(file.size));
-    if (detectFileSize > 500) {
+    const detectFileSize = fileSize(file.size)
+    console.log('detectFileSize', detectFileSize);
+    if (!(detectFileSize.indexOf('KB') !== -1 && parseFloat(detectFileSize) < 500)) {
       this.error('啊哦😯！文件过大，建议上传500KB以内的图片哦', 10);
     }
 
     this.setState({
       uploadedImg: res,
-      canDoFaceFusion:  detectFileSize < 500,
+      canDoFaceFusion:  detectFileSize.indexOf('KB') !== -1 && parseFloat(detectFileSize) < 500,
     });
 
     // start upload
