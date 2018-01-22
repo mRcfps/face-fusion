@@ -147,6 +147,10 @@ export default class extends Component {
     });
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
   success = (msg, duration = 3) => {
     message.success(msg, duration);
   }
@@ -171,6 +175,16 @@ export default class extends Component {
     console.log('activeScene', activeScene);
     
     console.log('face', faceFusionApi[dynastyMark][activeScene]);
+
+    // set a timer, after ten seconds, if fusion is not success, hint message.
+    this.timer = setTimeout(() => {
+      if (!this.state.fusionSuccess) {
+        that.setState({
+          isFusioning: false,
+        });
+        this.error('融合超时，请检查网络连接哦！😯');
+      }
+    }, 10000);
 
     // starting upload
     faceFusion(getBaseData, faceFusionApi[dynastyMark][activeScene], async (err, imageUrl) => {

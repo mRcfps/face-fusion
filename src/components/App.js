@@ -24,7 +24,7 @@ import $ from 'jquery';
 
 class App extends React.Component {
   state = {
-    headerImg: header,
+    headerImg: ossUrl + header,
     cnt: 0,
   };
 
@@ -37,7 +37,7 @@ class App extends React.Component {
     const clicked = await localStorage.getItem('clicked');
     if (clicked) {
       that.setState({
-        headerImg: header1,
+        headerImg: ossUrl + header1,
       });
     }
 
