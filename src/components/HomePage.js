@@ -148,10 +148,6 @@ export default class extends Component {
     });
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timer);
-  }
-
   success = (msg, duration = 3) => {
     message.success(msg, duration);
   }
@@ -160,28 +156,6 @@ export default class extends Component {
     message.error(msg, duration);
   }
 
-  handleFusion = async (imageData, template) => {
-    const formData = new FormData();
-    formData.append('image', imageData);
-    formData.append('template', template);
-
-    console.log('FormData', FormData);
-    const options = {
-      method: 'POST',
-      body: formData,
-    };
-
-    const response = await fetch('http://face-fusion.leanapp.cn', options);
-
-    if (response.status >= 200 && response.status < 300) {
-      return response;
-    } else {
-      var error = new Error(response.statusText);
-      error.response = response;
-
-      throw error;
-    }
-  }
 
   handleUpload = async (imageData, fileObj) => {
     // store that instance, for async function usage
@@ -193,16 +167,6 @@ export default class extends Component {
     // id is the order about scene
     const { id: dynastyMark } = this.props.location.state;
     const { activeScene } = this.state;
-
-    // set a timer, after ten seconds, if fusion is not success, hint message.
-    this.timer = setTimeout(() => {
-      if (!this.state.fusionSuccess) {
-        that.setState({
-          isFusioning: false,
-        });
-        this.error('融合超时，请检查网络连接哦！😯');
-      }
-    }, 20000);
 
     // starting upload
     try {
@@ -231,18 +195,7 @@ export default class extends Component {
 
       this.success('融合成功！');
     } catch (e) {
-      // else error, hint error message
-      if (e.ret === "1000") {
-        this.error('未识别到人脸！请换一张图片哟');
-      }
-
-      if (e.ret === "-1000") {
-        this.error('参数错误！请换一张图片哟');
-      }
-
-      if (e.ret === "-1001") {
-        this.error('图像处理错误！请换一张图片哟');
-      }
+      this.error('融合失败了哦😯！可以换个比较正的角度再试一下~');
     }
 
     // update the upload status to loaded
