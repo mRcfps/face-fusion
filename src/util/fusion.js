@@ -1,5 +1,5 @@
 const http = require('http');
-const templates = require('./templates')
+const templates = require('./templates');
 
 function makeRequest(options, payload, callback) {
   const req = http.request(options, res => {
@@ -10,7 +10,7 @@ function makeRequest(options, payload, callback) {
     res.on('end', () => {
       // Parse response body
       const data = JSON.parse(body);
-      callback(false, data.result);
+      callback(false, data);
     });
   });
 
@@ -28,7 +28,7 @@ function makeRequest(options, payload, callback) {
  * Generate merged image (base64-encoded) with given image and template
  * @param {string} image Base64-encoded image
  * @param {int} template Template id to merge (1~10)
- * @param {function (bool, string)} callback Should be called with (success, data)
+ * @param {function (bool, object)} callback Should be called with (success, data)
  */
 exports.faceFusion = function (image, template, callback) {
   const options = {
