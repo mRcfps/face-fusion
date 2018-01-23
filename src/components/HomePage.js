@@ -263,14 +263,11 @@ export default class extends Component {
     // detect this image size, when greater than 
     const detectFileSize = fileSize(file.size)
     console.log('detectFileSize', detectFileSize);
-    if (!(detectFileSize.indexOf('KB') !== -1 && parseFloat(detectFileSize) < 500)) {
-      this.error('啊哦😯！文件过大，建议上传500KB以内的图片哦', 10);
-    }
 
     this.setState({
       uploadedImg: res,
       fileObj: file,
-      canDoFaceFusion:  detectFileSize.indexOf('KB') !== -1 && parseFloat(detectFileSize) < 500,
+      canDoFaceFusion:  true,
     });
 
     // start upload
