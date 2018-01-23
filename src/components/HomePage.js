@@ -80,26 +80,26 @@ const bgArray = [
 // face fusion api
 const faceFusionApi = [
   [
-    'youtu_68981_20180109220002_5759',
+    5
   ],
   [
-    'youtu_68981_20180109220023_5762',
-    'youtu_68981_20180113163914_5920',
+    7,
+    6,
   ],
   [
-    'youtu_68981_20180109220032_5764',
-    'youtu_68981_20180109215952_5757',
+    8,
+    4,
   ],
   [
-    'youtu_68981_20180109220049_5766',
-    'youtu_68981_20180109220041_5765',
+    10,
+    9,
   ],
   [
-    'youtu_68981_20180109215941_5756',
+    3,
   ],
   [
-    'youtu_68981_20180109215910_5754',
-    'youtu_68981_20180109215929_5755',
+    1,
+    2,
   ],
 ];
 
@@ -116,6 +116,7 @@ export default class extends Component {
     takeOutWaterMark: false,
     isTakingOutWaterMark: false,
     takeOutWaterMarkSuccess: false,
+    fileObj: null,
   };
 
   componentDidMount() {
@@ -159,12 +160,32 @@ export default class extends Component {
     message.error(msg, duration);
   }
 
-  handleUpload = (imageData) => {
+  handleFusion = async (imageData, template) => {
+    const formData = new FormData();
+    formData.append('image', imageData);
+    formData.append('template', template);
+
+    console.log('FormData', FormData);
+    const options = {
+      method: 'POST',
+      body: formData,
+    };
+
+    const response = await fetch('http://face-fusion.leanapp.cn', options);
+
+    if (response.status >= 200 && response.status < 300) {
+      return response;
+    } else {
+      var error = new Error(response.statusText);
+      error.response = response;
+
+      throw error;
+    }
+  }
+
+  handleUpload = async (imageData, fileObj) => {
     // store that instance, for async function usage
     const that = this;
-
-    // take out base64 (data:image/jpeg;base64,) prefix
-    const getBaseData = imageData.split(',')[1];
 
     // update the upload status to isLoading
     this.setState({ isFusioning: true });
@@ -172,9 +193,6 @@ export default class extends Component {
     // id is the order about scene
     const { id: dynastyMark } = this.props.location.state;
     const { activeScene } = this.state;
-    console.log('activeScene', activeScene);
-    
-    console.log('face', faceFusionApi[dynastyMark][activeScene]);
 
     // set a timer, after ten seconds, if fusion is not success, hint message.
     this.timer = setTimeout(() => {
@@ -187,54 +205,48 @@ export default class extends Component {
     }, 20000);
 
     // starting upload
-    faceFusion(getBaseData, faceFusionApi[dynastyMark][activeScene], async (err, imageUrl) => {
-      console.log(err, imageUrl);
-      if (!err && imageUrl.img_url) {
+    try {
 
-        // when success, replace background img
-        that.setState({ 
-          fusionSuccess: true,
-          uploadedImg: imageUrl.img_url,
-        });
+      const formData = new FormData();
+      formData.append('image', fileObj);
+      formData.append('template', faceFusionApi[dynastyMark][activeScene]);
+  
+      console.log('FormData', FormData);
+      const options = {
+        method: 'POST',
+        body: formData,
+      };
+  
+      const response = await fetch('http://face-fusion.leanapp.cn', options);
 
-        this.success('融合成功！');
-        
-        
-        // replace the download link
-        const downLoadBtn = $('.mainModal .ant-modal-footer').find('.ant-btn')[1];
-        $(downLoadBtn).html(`
-          <a href="${imageUrl.img_url}" download="image.png">下载图片</a>
-        `);
 
-        const modalFooterDiv = $('.mainModal .ant-modal-footer').find('div')[0];
-        $(modalFooterDiv).append(
-          '<button type="button" class="ant-btn ant-btn-primary" id="removeWaterMark"><span>去水印</span></span></button>'
-        );
+      // ReadableStream convert to Blob
+      const buffer = await response.json();
 
-        $('#removeWaterMark').click(() => {
-          console.log('click');
-          that.setState({
-            takeOutWaterMark: true,
-          });
-        });
-      } else {
-        // else error, hint error message
-        if (imageUrl.ret === "1000") {
-          this.error('未识别到人脸！请换一张图片哟');
-        }
+      that.setState({ 
+        fusionSuccess: true,
+        uploadedImg: 'data:image/jpeg;base64,' + buffer.result,
+        takeOutWaterMarkSuccess: true,
+      });
 
-        if (imageUrl.ret === "-1000") {
-          this.error('参数错误！请换一张图片哟');
-        }
-
-        if (imageUrl.ret === "-1001") {
-          this.error('图像处理错误！请换一张图片哟');
-        }
+      this.success('融合成功！');
+    } catch (e) {
+      // else error, hint error message
+      if (e.ret === "1000") {
+        this.error('未识别到人脸！请换一张图片哟');
       }
 
-      // update the upload status to loaded
-      that.setState({ isFusioning: false });
-    });
+      if (e.ret === "-1000") {
+        this.error('参数错误！请换一张图片哟');
+      }
+
+      if (e.ret === "-1001") {
+        this.error('图像处理错误！请换一张图片哟');
+      }
+    }
+
+    // update the upload status to loaded
+    that.setState({ isFusioning: false });
   }
 
   handleError = () => {
@@ -257,6 +269,7 @@ export default class extends Component {
 
     this.setState({
       uploadedImg: res,
+      fileObj: file,
       canDoFaceFusion:  detectFileSize.indexOf('KB') !== -1 && parseFloat(detectFileSize) < 500,
     });
 
@@ -311,7 +324,7 @@ export default class extends Component {
   }
 
   handleOk = () => {
-    const { canDoFaceFusion, uploadedImg, fusionSuccess, takeOutWaterMarkSuccess } = this.state;
+    const { canDoFaceFusion, uploadedImg, fusionSuccess, takeOutWaterMarkSuccess, fileObj } = this.state;
     if (!canDoFaceFusion || !uploadedImg) {
       this.error('对不起，照片不符合要求！', 3);
     } else if (fusionSuccess) {
@@ -321,7 +334,7 @@ export default class extends Component {
         return;
       }
     } else {
-      this.handleUpload(uploadedImg);
+      this.handleUpload(uploadedImg, fileObj);
     }
   }
 

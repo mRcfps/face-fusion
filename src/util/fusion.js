@@ -1,5 +1,5 @@
 const http = require('http');
-const templates = require('./templates');
+const templates = require('./templates').templates;
 
 function makeRequest(options, payload, callback) {
   const req = http.request(options, res => {
@@ -32,9 +32,9 @@ function makeRequest(options, payload, callback) {
  */
 exports.faceFusion = function (image, template, callback) {
   const options = {
-    hostname: 'https://api-cn.faceplusplus.com',
+    hostname: 'api-cn.faceplusplus.com',
     path: '/imagepp/v1/mergeface',
-    method: 'POST'
+    method: 'POST',
   };
   const postData = {
     'api_key': 'UgbTEz7_IQGn0vxyoY7V9udl5fZ3kJeM',
