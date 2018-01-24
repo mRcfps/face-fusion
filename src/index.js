@@ -17,7 +17,6 @@ import {
   HomePage,
   SelectScene,
   IntroBook,
-  ShowImage,
 } from './components/';
 
 const Root = () => (
@@ -27,7 +26,6 @@ const Root = () => (
       <Route path="/homePage" component={HomePage} />
       <Route path="/selectScene" component={SelectScene} />
       <Route path="/introBook" component={IntroBook} />
-      <Route path="/showImage" component={ShowImage} />
     </div>
   </Router>
 )

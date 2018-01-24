@@ -1,13 +1,8 @@
 // import wide-holding fetch api
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import fileSize from 'filesize';
-import browserImageSize from 'browser-image-size';
-import Cropper from 'cropperjs';
 import Swiper from 'swiper/dist/js/swiper.min.js';
 import './css/swiper.min.css';
-
-import createHistory from "history/createBrowserHistory"
 
 // import antd component
 import { Upload, message, Spin, Icon, Modal, Alert } from 'antd';
@@ -46,10 +41,6 @@ import { faceFusion, ossUrl } from '../util/';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-
-
-// create history
-export const history = createHistory();
 
 // construct bg array
 const bgArray = [
@@ -182,10 +173,14 @@ export default class extends Component {
       };
   
       const response = await fetch('http://face-fusion.leanapp.cn', options);
+      console.log('response', response);
 
 
       // ReadableStream convert to Blob
       const buffer = await response.json();
+      if (buffer.error_message) {
+        throw new Error('融合失败！');
+      }
 
       that.setState({ 
         fusionSuccess: true,
@@ -193,9 +188,12 @@ export default class extends Component {
         takeOutWaterMarkSuccess: true,
       });
 
-      this.success('融合成功！');
+      this.success('融合成功！😝');
+      // replace the download link
+      const downLoadBtn = $('.mainModal .ant-modal-footer').find('.ant-btn')[1];
+      $(downLoadBtn).html('<span>下载图片</span>');
     } catch (e) {
-      this.error('融合失败了哦😯！可以换个比较正的角度再试一下~');
+      this.error('融合失败了哦😯！可能有如下两点原因：\n1.图片中人的姿势不太正\n2.图片过大');
     }
 
     // update the upload status to loaded
@@ -213,18 +211,11 @@ export default class extends Component {
     this.success('上传图片成功！');
     this.setState({ isUploading: false });
 
-    // detect this image size, when greater than 
-    const detectFileSize = fileSize(file.size)
-    console.log('detectFileSize', detectFileSize);
-
     this.setState({
       uploadedImg: res,
       fileObj: file,
       canDoFaceFusion:  true,
     });
-
-    // start upload
-    // this.handleUpload(getBaseData);
   }
 
   handleStartUpload = () => {
@@ -288,85 +279,6 @@ export default class extends Component {
     }
   }
 
-  handleProcessed = (err, src) => {
-    
-    this.setState({
-      uploadedImg: src,
-    });
-  }
-
-  handleWaterCancel = (e) => {
-    this.setState({
-      takeOutWaterMark: false,
-    });
-  }
-
-  getCutOfImage = async () => {
-  }
-
-  handleWaterOk = async (e) => {
-    const { uploadedImg } = this.state;
-
-    this.setState({
-      isTakingOutWaterMark: true,
-    });
-
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({
-        image: uploadedImg,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    // save this state of that
-    const that = this;
-    console.log('uploadedImg', uploadedImg);
-
-    console.log('options', options);
-    console.log('fetch', fetch)
-
-    try {
-      const response = await fetch('http://antiwatermark.avosapps.us/', options)
-      
-      console.log('response', response);
-      // ReadableStream convert to Blob
-      const buffer = await response.blob();
-
-      // filereader for convert blob to base64
-      const reader = new FileReader();
-      reader.onload = () => {
-        // get the base64 result 
-        const result = reader.result;
-        that.setState({
-          uploadedImg: result,
-          takeOutWaterMark: false,
-          isTakingOutWaterMark: false,
-          takeOutWaterMarkSuccess: true,
-        });
-
-        this.success('去水印成功！长按图片下载您的穿越照片！', 10);
-        // replace the download link
-        const downLoadBtn = $('.mainModal .ant-modal-footer').find('.ant-btn')[1];
-        $(downLoadBtn).html('<span>下载图片</span>');
-      }
-
-      // start uploadfile and convert to base64
-      reader.readAsDataURL(buffer);
-
-    } catch (e) {
-      console.log('e', e);
-      this.error('很遗憾！去水印失败 = =');
-      that.setState({
-        takeOutWaterMark: false,
-        isTakingOutWaterMark: false,
-        takeOutWaterMarkSuccess: false,
-      });
-    }
-  }
-
   render() {
     // the uploadIcon for the isUploading status 
     const uploadIcon = ( 
@@ -427,28 +339,8 @@ export default class extends Component {
       />
     );
 
-    // display cutwatermark
-    const selectCutWaterMarkMessage = isTakingOutWaterMark
-    ? (
-      <Spin tip="去除水印中...">
-        {cutWaterMarkMessage}
-      </Spin>
-    )
-    : cutWaterMarkMessage;
-
     return (
       <div className="homePage">
-        <Modal
-          visible={takeOutWaterMark}
-          closable={false}
-          wrapClassName="waterMarkModal"
-          onCancel={this.handleWaterCancel}
-          cancelText="取消"
-          onOk={this.handleWaterOk}
-          okText="确认去除"
-        >
-          {selectCutWaterMarkMessage}
-        </Modal>
         <Modal
           visible={showModal}
           onCancel={this.handleCancel}
@@ -516,12 +408,3 @@ export default class extends Component {
     );
   }
 }
-
-// { 
-//   fusionedImg 
-//   && ( 
-//     <a href={fusionedImg} download="image.png">
-//       <img src={ossUrl + download} alt="download button" className="downloadIcon"/>
-//     </a>
-//   )
-// }
